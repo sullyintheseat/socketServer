@@ -25,6 +25,7 @@ app.get('/', function(req, res){
 })
 
 io.on('connection', function(socket){
+  this.emit('chat', 'connected')
   socket.on('disconnect', socketController.userDisconnected)
 
   socket.on('chat', (msg) => {
