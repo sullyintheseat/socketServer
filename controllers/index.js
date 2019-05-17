@@ -9,7 +9,7 @@ const SocketController = {
   },
 
   sendAll: (io, msg) => {
-    io.emit('updateApp', msg)
+    io.emit('updateApp', {msg})
   }
 }
 
