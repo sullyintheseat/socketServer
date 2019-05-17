@@ -9,8 +9,8 @@ const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
 
 var app = require('express')()
-var http = require('http').Server(app)
-var io = require('socket.io')(http)
+var https = require('https').Server(app)
+var io = require('socket.io')(https)
 
 let socketController = require('./controllers/index.js')
 
@@ -42,6 +42,6 @@ io.on('connection', function(socket){
 })
 
 
-http.listen(process.env.PORT, function(io){
+https.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)
 })
