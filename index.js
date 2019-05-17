@@ -12,6 +12,17 @@ var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 
+
+var xPolicy			    = function (req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.header("Access-Control-Allow-Credentials" ,"true");
+	//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token, X-CSRF-TOKEN, api-key, authorization, content-type");
+  	next();
+};
+app.use(xPolicy);
+
 let socketController = require('./controllers/index.js')
 
 db.on('error', console.error)
@@ -34,6 +45,8 @@ io.on('connection', function(socket){
   })
 
   socket.on('sendToAll', (msg) => {
+
+    console.log(msg)
     socketController.sendAll(this, msg)
   })
 
