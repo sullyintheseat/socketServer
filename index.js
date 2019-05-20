@@ -33,6 +33,9 @@ io.on('connection', function(socket){
   })
 
   socket.on('sendToAll', (msg) => {
+    if(msg.length < 1 ){
+      msg = null;
+    }
     socketController.sendAll(this, msg)
   })
 
