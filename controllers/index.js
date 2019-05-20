@@ -9,7 +9,16 @@ const SocketController = {
   },
 
   sendAll: (io, msg) => {
-    io.json.emit('updateApp',msg)
+    io.emit('updateApp', msg)
+  },
+
+  addUser: (io, msg) => {
+    io.username = msg;
+    
+    io.emit('userSigned', {
+      username: msg
+    })
+    console.log(msg)
   }
 }
 
