@@ -14,6 +14,9 @@
     </style>
   </head>
   <body>
+    <p><a href="#" onclick="send(0)">Send Ad 1</a></p>
+    <p><a href="#" onclick="send(1)">Send Ad 2</a></p>
+    <p><a href="#" onclick="send(null)">Clear Ad</a></p>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -21,15 +24,33 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+      ads = [
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/skeeters_logo.png"',
+        '"test":"https://mp.vibescm.com/c/cdop15", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/skeeters_logo.png"'
+      ]
       $(function () {
-        var socket = io();
         $('form').submit(function(e){
+          let socket = io();
           e.preventDefault(); // prevents page reloading
           socket.emit('sendToAll', $('#m').val());
           $('#m').val('');
           return false;
         });
       });
+      function send (id) {
+        let socket = io();
+        if(id != null){
+          console.log(ads[id])
+          let myval = `{${ads[id]}}`
+          socket.emit('sendToAll',myval);
+        
+          return false;
+        } else {
+          socket.emit('sendToAll', '');
+        
+          return false;
+        }
+      }
     </script>
   </body>
 </html>
