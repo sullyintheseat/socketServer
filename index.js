@@ -12,6 +12,8 @@ var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 
+app.set('socketio', io);
+
 let socketController = require('./controllers/index.js')
 
 db.on('error', console.error)
@@ -24,8 +26,16 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/web/index.html')
 })
 
-io.on('connection', function(socket){
-  socket.on('disconnect', socketController.userDisconnected)
+
+const server = http.listen(process.env.PORT, function(io){
+  console.log(`listening on *: ${process.env.PORT}`)
+})
+
+io.on('connection', function(socket) {
+  console.log(socket.id)
+  socket.on('disconnect', () => {
+    socketController.userDisconnected(this)
+  })
 
   socket.on('chat', (msg) => {
     socketController.userChat,
@@ -43,13 +53,21 @@ io.on('connection', function(socket){
     
   })
 
+  socket.on('target', (user, msg) => {
+    console.log(user + ' ' + msg)
+    let t;
+    for(let i =0; i < socketController.users.length; i++) {
+      if(socketController.users[i].username === user){
+        console.log('hit')
+        this.to(socketController.users[i].socketId).emit('testCall', 'data');
+      }
+    }
+    
+  })
+
   socket.on('addUser', (msg) => {
-    socketController.addUser(this, msg)
+    socketController.addUser(this, msg, socket.id)
     socket.broadcast.emit('userJoined',  {data: 'true'})
   })
-})
 
-
-http.listen(process.env.PORT, function(io){
-  console.log(`listening on *: ${process.env.PORT}`)
-})
+});

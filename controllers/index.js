@@ -1,7 +1,8 @@
 const SocketController = {
+  users : [],
 
   userDisconnected: (val) => {
-    console.log(val)
+    
   },
 
   userChat: (msg) => {
@@ -12,13 +13,17 @@ const SocketController = {
     io.emit('updateApp', msg)
   },
 
-  addUser: (io, msg) => {
+  addUser: (io, msg, socketId) => {
     io.username = msg;
     
     io.emit('userSigned', {
+      socketId: socketId,
       username: msg
     })
-    console.log(msg)
+    SocketController.users.push({socketId,
+      username: msg})
+
+    console.log(SocketController.users)
   }
 }
 
