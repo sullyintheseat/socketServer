@@ -70,4 +70,8 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('userJoined',  {data: 'true'})
   })
 
+  socket.on('removeUser', (name) => {
+    console.log(name)
+  })
+
 });
