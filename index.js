@@ -54,8 +54,8 @@ io.on('connection', function(socket) {
   })
 
   socket.on('target', (user, msg) => {
-    console.log(user + ' ' + msg)
-    let t;
+    console.log(socketController.users)
+
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
         console.log('hit')
@@ -71,7 +71,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('removeUser', (name) => {
-    console.log(name)
+    socketController.removeUser(name)
   })
 
 });
