@@ -59,7 +59,7 @@ io.on('connection', function(socket) {
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
         console.log('hit')
-        this.to(socketController.users[i].socketId).emit('testCall', 'data');
+        this.to(socketController.users[i].socketId).emit('testCall', user.username);
       }
     }
     
