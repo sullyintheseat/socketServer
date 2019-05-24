@@ -29,9 +29,7 @@ const SocketController = {
   removeUser: (user) => {
     console.log(user)
     
-    SocketController.users = SocketController.users.filter((item) => {
-      return item.username !== item.username
-    })
+  
     console.log(SocketController.users)
   }
 }
