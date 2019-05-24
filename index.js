@@ -34,6 +34,12 @@ const server = http.listen(process.env.PORT, function(io){
 io.on('connection', function(socket) {
   console.log(socket.id)
   socket.on('disconnect', () => {
+    console.log(socket.id + '<----')
+
+    socketController.users = socketController.users.filter((item) => {
+      return item.socketId !== socket.id
+    })
+
     socketController.userDisconnected(this)
   })
 
@@ -55,7 +61,6 @@ io.on('connection', function(socket) {
 
   socket.on('target', (user, msg) => {
     console.log(socketController.users)
-    console.log(user + '<----')
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
         console.log('hit')
