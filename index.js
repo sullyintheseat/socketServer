@@ -33,13 +33,8 @@ const server = http.listen(process.env.PORT, function(io){
 
 io.on('connection', function(socket) {
   console.log(socket.id + ' connected')
-  
+
   socket.on('disconnect', () => {
-
-    socketController.users = socketController.users.filter((item) => {
-      return item.socketId !== socket.id
-    })
-
     socketController.userDisconnected(this)
   })
 
