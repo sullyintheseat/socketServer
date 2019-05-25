@@ -2,9 +2,9 @@ require('dotenv').config()
 require("dotenv-safe").config({
   allowEmptyValues: true
 });
+
 const mongoose = require('mongoose')
 const fs = require('fs')
-
 const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
 
@@ -51,23 +51,20 @@ io.on('connection', function(socket) {
   })
 
   socket.on('pushDestination', (msg) =>{
-    
   })
 
   socket.on('target', (user, msg) => {
-    console.log(socketController.users)
+    console.log(msg)
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
-        console.log('hit')
         this.to(socketController.users[i].socketId).emit('testCall', user);
       }
     }
-    
   })
 
   socket.on('addUser', (msg) => {
     socketController.addUser(this, msg, socket.id)
-    socket.broadcast.emit('userJoined',  {data: 'true'})
+    this.to(socket.id).emit('userJoined',  {data: 'true'})
   })
 
   socket.on('removeUser', (name) => {
