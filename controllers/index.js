@@ -16,7 +16,7 @@ const SocketController = {
   addUser: (io, msg, socketId) => {
     io.username = msg;
     
-    io.emit('userSigned', {
+    io.to(socketId).emit('userSigned', {
       socketId: socketId,
       username: msg
     })
