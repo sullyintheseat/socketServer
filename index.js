@@ -54,7 +54,8 @@ io.on('connection', function(socket) {
   })
 
   socket.on('target', (user, msg) => {
-    console.log(msg)
+    console.log(msg, user)
+    console.log(socketController.users)
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
         this.to(socketController.users[i].socketId).emit('testCall', user);
@@ -63,6 +64,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('addUser', (msg) => {
+    console.log(msg + ' add user')
     socketController.addUser(this, msg, socket.id)
     this.to(socket.id).emit('userJoined',  {data: 'true'})
   })
