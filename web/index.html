@@ -16,9 +16,9 @@
   <body>
     <div style="margin:5%;">
       <h3>Singles</h3>
-      <p><a href="#" onclick="sendTo('matt', 'hello')">Matt</a></p>
-      <p><a href="#" onclick="sendTo('cameron', 'hello')">Cameron</a></p>
-      <p><a href="#" onclick="sendTo('louis', 'hello')">Louis</a></p>
+      <p><a href="#" onclick="sendTo('matt', 0)">Matt</a></p>
+      <p><a href="#" onclick="sendTo('cameron', 1)">Cameron</a></p>
+      <p><a href="#" onclick="sendTo('louis', 2)">Louis</a></p>
       <br/><br/>
       <h3>Send to all</h3>
       <p><a href="#" onclick="send(0)">Send Ad 1</a></p>
@@ -37,6 +37,11 @@
       ads = [
         '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/coozies.png"',
         '"test":"https://mp.vibescm.com/c/cdop15", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/hat.png"'
+      ]
+      prizes = [
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/lexus.png"',
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/coozies.png"',
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/coozies.png"'
       ]
       $(function () {
         $('form').submit(function(e){
@@ -63,7 +68,8 @@
       }
 
       function sendTo (user, msg) {
-        let socket = io();
+        let socket = io()
+        msg = `{${prizes[msg]}}`
         socket.emit('target', user, msg)
         return false
       }

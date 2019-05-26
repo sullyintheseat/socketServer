@@ -58,7 +58,7 @@ io.on('connection', function(socket) {
     console.log(socketController.users)
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
-        this.to(socketController.users[i].socketId).emit('testCall', user);
+        this.to(socketController.users[i].socketId).emit('testCall', msg);
       }
     }
   })
