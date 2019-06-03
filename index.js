@@ -7,7 +7,8 @@ const mongoose = require('mongoose')
 const fs = require('fs')
 const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
-
+let express					= require('express');
+let path					  = require('path')
 var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
@@ -22,10 +23,21 @@ db.once('open', function() {
 	
 })
 
+var xPolicy			    = function (req, res, next){
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.header("Access-Control-Allow-Credentials", "true");
+	//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, access_token, X-CSRF-TOKEN");
+  	next();
+};
+app.use(xPolicy);
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/web/index.html')
 })
 
+app.use('/', express.static(path.join(__dirname, 'web')))
 
 const server = http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)
