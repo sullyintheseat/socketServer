@@ -13,9 +13,11 @@ var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 
-app.set('socketio', io);
+app.all('*', function(req, res, next){ req.io	= io; next();});
 
 let socketController = require('./controllers/index.js')
+
+require('./controllers/communication').controller(app);
 
 db.on('error', console.error)
 db.once('connected', function() { console.log(`${dbPath}`)})
@@ -77,6 +79,8 @@ io.on('connection', function(socket) {
 
   socket.on('addUser', (msg) => {
     console.log(msg + ' add user')
+    console.log(io.sockets.adapter.rooms)
+    socket.join('stadium')
     socketController.addUser(this, msg, socket.id)
     this.to(socket.id).emit('userJoined',  {data: 'true'})
   })
@@ -84,5 +88,10 @@ io.on('connection', function(socket) {
   socket.on('removeUser', (name) => {
     socketController.removeUser(name)
   })
+
+  socket.on('create', (room) => {
+    console.log(room)
+    socket.join(room);
+  });
 
 });

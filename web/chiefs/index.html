@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Controller</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto:400,500,700,900" rel="stylesheet">
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js" type="text/javascript"></script>    
+    <script src="/cdn/js/libs/jquery-2.2.3.min.js" type="text/javascript"></script>
+    <link href="/cdn/style/open-iconic-bootstrap.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="/cdn/style/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/cdn/style/custom.css"/>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="black_50"></div>
+      <div class="grey_25"></div>
+      <div class="container">
+        <div class="row">
+          <img src="/dslogo.jpg" class="dslogo" />
+        </div>
+      </div>
+    </div>
+    <div class="container" style="margin-top:64px;">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Kansas City Chiefs Demo</h2>
+          <h3>Singles - Target Offer</h3>
+          <p><br /></p>
+          <p>By Tags</p>
+          <p>Seat 1 <a href="#" onclick="sendTo('seat1', 0)">lexus</a> - <a href="#" onclick="sendTo('seat1', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat1', 2)">pizza</a></p>
+          <p>Seat 2 <a href="#" onclick="sendTo('seat2', 0)">lexus</a> - <a href="#" onclick="sendTo('seat2', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat2', 2)">pizza</a></p>
+          <p>Seat 3 <a href="#" onclick="sendTo('seat3', 0)">lexus</a> - <a href="#" onclick="sendTo('seat3', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat3', 2)">pizza</a></p>
+          <p>Seat 4 <a href="#" onclick="sendTo('seat4', 0)">lexus</a> - <a href="#" onclick="sendTo('seat4', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat4', 2)">pizza</a></p>
+          <p>Seat 5 <a href="#" onclick="sendTo('seat5', 0)">lexus</a> - <a href="#" onclick="sendTo('seat5', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat5', 2)">pizza</a></p>
+          <p>Seat 6 <a href="#" onclick="sendTo('seat6', 0)">lexus</a> - <a href="#" onclick="sendTo('seat6', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat6', 2)">pizza</a></p>
+          <p>Seat 7 <a href="#" onclick="sendTo('seat7', 0)">lexus</a> - <a href="#" onclick="sendTo('seat7', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat7', 2)">pizza</a></p>
+          <p>Seat 8 <a href="#" onclick="sendTo('seat8', 0)">lexus</a> - <a href="#" onclick="sendTo('seat8', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat8', 2)">pizza</a></p>
+          <p>Seat 9 <a href="#" onclick="sendTo('seat9', 0)">lexus</a> - <a href="#" onclick="sendTo('seat9', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat9', 2)">pizza</a></p>
+          <p>Seat 10 <a href="#" onclick="sendTo('seat10', 0)">lexus</a> - <a href="#" onclick="sendTo('seat10', 1)">hotdog</a> - <a href="#" onclick="sendTo('seat10', 2)">pizza</a></p>
+          <p><br /></p>
+          <p>Matt <a href="#" onclick="sendTo('matt', 0)">lexus</a> - <a href="#" onclick="sendTo('matt', 1)">hotdog</a> - <a href="#" onclick="sendTo('matt', 2)">pizza</a></p>
+          <p>Cameron <a href="#" onclick="sendTo('cameron', 0)">lexus</a> - <a href="#" onclick="sendTo('cameron', 1)">hotdog</a> - <a href="#" onclick="sendTo('cameron', 2)">pizza</a></p>
+          <p>Louis <a href="#" onclick="sendTo('louis', 0)">lexus</a> - <a href="#" onclick="sendTo('louis', 1)">hotdog</a> - <a href="#" onclick="sendTo('louis', 2)">pizza</a></p>
+          <p><br /></p>
+          <h3>Send to all</h3>
+          <p><a href="#" onclick="send(0)">Send Ad Coozies</a></p>
+          <p><a href="#" onclick="send(1)">Send Ad Hats</a></p>
+          <p><a href="#" onclick="send(2)">Send Loyalty Offer</a></p>
+          <br/><br/>
+          <h3>Clear all</h3>
+          <p><a href="#" onclick="send(null)">Clear Ad</a></p>
+        </div>
+      </div>
+    </div>
+    <!--ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      ads = [
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/coozies.png"',
+        '"test":"https://mp.vibescm.com/c/cdop15", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/hat.png"',
+        '"test":"https://mp.vibescm.com/c/woova5", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/loyalty.png"'
+      ]
+      prizes = [
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/lexus.png"',
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/hotdogwin.png"',
+        '"test":"https://mp.vibescm.com/c/872fcf", "img":"https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/skeeters/freepizza.png"'
+      ]
+      $(function () {
+        $('form').submit(function(e){
+          let socket = io();
+          e.preventDefault(); // prevents page reloading
+          socket.emit('sendToAll', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+      });
+      function send (id) {
+        let socket = io();
+        if(id != null){
+          console.log(ads[id])
+          let myval = `{${ads[id]}}`
+          socket.emit('sendToAll',myval);
+        
+          return false;
+        } else {
+          socket.emit('sendToAll', '');
+        
+          return false;
+        }
+      }
+
+      function sendTo (user, msg) {
+        let socket = io()
+        msg = `{${prizes[msg]}}`
+        socket.emit('target', 'chiefs-' + user, msg)
+        return false
+      }
+    </script>
+  </body>
+</html>
