@@ -3,21 +3,27 @@ require("dotenv-safe").config({
   allowEmptyValues: true
 });
 
+const cors = require('cors');
 const mongoose = require('mongoose')
 const fs = require('fs')
 const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
-let express					= require('express');
-let path					  = require('path')
+let express	= require('express');
+let path = require('path')
 var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
+const bodyParser = require('body-parser')
+
+app.use(cors());
+app.options('*', cors());
 
 app.all('*', function(req, res, next){ req.io	= io; next();});
 
 let socketController = require('./controllers/index.js')
 
 require('./controllers/communication').controller(app);
+require('./controllers/metrics').controller(app);
 
 db.on('error', console.error)
 db.once('connected', function() { console.log(`${dbPath}`)})
@@ -28,12 +34,19 @@ db.once('open', function() {
 var xPolicy			    = function (req, res, next){
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-	res.header("Access-Control-Allow-Credentials", "true");
-	//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, access_token, X-CSRF-TOKEN");
+  res.header("Access-Control-Allow-Credentials", "true");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token, XSRF-TOKEN, X-CSRF-TOKEN, api-key, authorization, content-type");
   	next();
 };
 app.use(xPolicy);
+
+
+app.set('port', process.env.PORT || aport);
+
+app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.text({ type: 'text/html' }))
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/web/index.html')
@@ -41,7 +54,7 @@ app.get('/', function(req, res){
 
 app.use('/', express.static(path.join(__dirname, 'web')))
 
-const server = http.listen(process.env.PORT, function(io){
+http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)
 })
 
