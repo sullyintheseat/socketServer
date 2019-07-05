@@ -3,6 +3,7 @@ const MetricsController = {
     try {
       let { type, brand } = req.params
       let result = {data : `yes to ${type} and ${brand}`}
+      console.log(result)
       res.status(200).send(result);
     } catch (err) {
       res.status(500).send('Unknown Server Response');
