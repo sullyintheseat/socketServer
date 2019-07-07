@@ -5,7 +5,7 @@ const SocketController = {
   },
 
   userChat: (msg) => {
-    console.log(msg)
+    // console.log(msg)
   },
 
   sendAll: (io, msg) => {
@@ -20,12 +20,11 @@ const SocketController = {
     })
     SocketController.users.push({socketId,
       username: msg})
-    
-    console.log(SocketController.users)
+    //console.log(SocketController.users)
   },
 
   removeUser: (user) => {
-    console.log(SocketController.users)
+    // console.log(SocketController.users)
   }
 }
 

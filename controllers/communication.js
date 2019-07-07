@@ -11,8 +11,8 @@ const CommunicationsController = {
   },
 
   direct: (req, res) => {
-    console.log(req.params.id)
-    console.log(req.io.sockets.adapter.rooms)
+    // console.log(req.params.id)
+    // console.log(req.io.sockets.adapter.rooms)
     req.io.sockets.in('stadium').to('chuck').emit('chat', {name: req.params.msg});
     res.status(200).send('success')
   }

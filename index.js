@@ -59,7 +59,7 @@ http.listen(process.env.PORT, function(io){
 })
 
 io.on('connection', function(socket) {
-  console.log(socket.id + ' connected')
+  //console.log(socket.id + ' connected')
 
   socket.on('disconnect', () => {
     socketController.userDisconnected(this)
@@ -81,8 +81,8 @@ io.on('connection', function(socket) {
   })
 
   socket.on('target', (user, msg) => {
-    console.log(msg, user)
-    console.log(socketController.users)
+    // console.log(msg, user)
+    // console.log(socketController.users)
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
         this.to(socketController.users[i].socketId).emit('testCall', msg);
@@ -91,8 +91,8 @@ io.on('connection', function(socket) {
   })
 
   socket.on('addUser', (msg) => {
-    console.log(msg + ' add user')
-    console.log(io.sockets.adapter.rooms)
+    // console.log(msg + ' add user')
+    // console.log(io.sockets.adapter.rooms)
     socket.join('stadium')
     socketController.addUser(this, msg, socket.id)
     this.to(socket.id).emit('userJoined',  {data: 'true'})
@@ -103,7 +103,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('create', (room) => {
-    console.log(room)
+    // console.log(room)
     socket.join(room);
   });
 
