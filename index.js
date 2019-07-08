@@ -81,7 +81,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('target', (user, msg) => {
-    // console.log(msg, user)
+    console.log(msg, user)
     // console.log(socketController.users)
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
