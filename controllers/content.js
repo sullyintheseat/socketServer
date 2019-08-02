@@ -9,9 +9,11 @@ const result = {
     },
     "card": {
       "color": "#dc0026",
+      "textSize": "28px",
       "border": true,
-      "borderSize": "10px",
-      "borderColor": "#dc0026"
+      "borderSize": "0px",
+      "borderRadius": "10px",
+      "borderColor": "rgb(214, 214, 214)"
     },
     "homeButton": {
       "image": "PB_btn_green_connected.png",
@@ -22,7 +24,7 @@ const result = {
   },
   "colors": {
     "primary": "#dc0026",
-    "primaryText": "yellow",
+    "primaryText": "#feb300",
     "card": {
       "border": true,
       "borderSize": "10px",
@@ -37,7 +39,65 @@ const result = {
       "icon": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/pytchblack/icon_platform.png",
       "title": "Offers",
       "target": "/option1",
-      "widget": "offers"
+      "widget": "offers",
+      "header": {
+        "template": "fixed_image",
+        "logo": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/icon_calendar_selected.png",
+        "image": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/KC_header_sponsors.jpg"
+      },
+      "content": {
+        "borderRadius": "15px",
+        "offers": [
+          {
+            "title": "80% off Any Coke",
+            "subtitle": "Save money on your next coke! Thanks to Digital Seat, Madison Square Garden, and Coca Cola, you get to enjoy a crisp coke for a fraction of the price. Take this to your nearest vendor to get refreshed now!",
+            "image": "https://ds-stadium-bucket.s3.us-east-2.amazonaws.com/chiefs/MA_coupon_card_Bacardi.jpg",
+            "button": {
+              "text": "Redeem Offer"
+            },
+            "discount": {
+              "type": "Percent",
+              "value": 80
+            }
+          },
+          {
+            "title": "$200 off All TVs at Best Buy",
+            "subtitle": "Save money on your next TV! Thanks to Digital Seat, Madison Square Garden, and Best Buy, you get to enjoy a nice TV for a fraction of the price. Take this to your nearest vendor to start watching now!",
+            "image": "https://ds-stadium-bucket.s3.us-east-2.amazonaws.com/chiefs/MA_coupon_card_DraftKings.jpg",
+            "button": {
+              "text": "Redeem Offer"
+            },
+            "discount": {
+              "type": "Money",
+              "value": 200
+            }
+          },
+          {
+            "title": "$200 off All TVs at Best Buy",
+            "subtitle": "Save money on your next TV! Thanks to Digital Seat, Madison Square Garden, and Best Buy, you get to enjoy a nice TV for a fraction of the price. Take this to your nearest vendor to start watching now!",
+            "image": "https://ds-stadium-bucket.s3.us-east-2.amazonaws.com/chiefs/MA_coupon_card_Nissan.jpg",
+            "button": {
+              "text": "Redeem Offer"
+            },
+            "discount": {
+              "type": "Money",
+              "value": 200
+            }
+          },
+          {
+            "title": "$200 off All TVs at Best Buy",
+            "subtitle": "Save money on your next TV! Thanks to Digital Seat, Madison Square Garden, and Best Buy, you get to enjoy a nice TV for a fraction of the price. Take this to your nearest vendor to start watching now!",
+            "image": "https://ds-stadium-bucket.s3.us-east-2.amazonaws.com/chiefs/MA_coupon_card_StateFarm.jpg",
+            "button": {
+              "text": "Redeem Offer"
+            },
+            "discount": {
+              "type": "Money",
+              "value": 200
+            }
+          }
+        ]
+      }
     },
     {
       "id": 2,
@@ -47,31 +107,71 @@ const result = {
       "title": "Schedule",
       "target": "/option2",
       "widget": "schedule",
+      "header": {
+        "template": "fixed_image",
+        "logo": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/icon_calendar_selected.png",
+        "image": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/KC_header_schedule.jpg"
+      },
       "content": {
+        "is_season_active": true,
+        "is_preseason_active": true,
+        "is_offseason_active": false,
+        "button": {
+          "text": "Tickets",
+          "icon": "event"
+        },
         "events": [
           {
-            "title": "Awesome Fest: Day One",
+            "title": "Pre-season WEEK 1",
             "subtitle": "A fun place for all!",
-            "time": "3:00PM",
-            "date": "03-21-2019"
+            "time": "7:00PM CDT",
+            "date": "08-10-2019",
+            "is_preseason": true,
+            "opposing_team": {
+              "name": "Bengals",
+              "logo": "https://res.cloudinary.com/nflleague/image/private/t_q-best/league/okxpteoliyayufypqalq",
+              "city": "Cincinnati",
+              "state": ""
+            }
           },
           {
-            "title": "Awesome Fest: Day Two",
+            "title": "Pre-season WEEK 2",
             "subtitle": "A fun place for all!",
-            "time": "3:00PM",
-            "date": "03-22-2019"
+            "time": "6:30PM",
+            "date": "03-22-2019",
+            "is_preseason": true,
+            "opposing_team": {
+              "name": "Steelers",
+              "logo": "https://res.cloudinary.com/nflleague/image/private/t_q-best/league/xujg9t3t4u5nmjgr54wx",
+              "city": "Pittsburgh",
+              "state": ""
+            }
           },
           {
-            "title": "Awesome Fest: Day Three",
+            "title": "Pre-season WEEK 3",
             "subtitle": "A fun place for all!",
-            "time": "3:00PM",
-            "date": "03-23-2019"
+            "time": "7:00PM",
+            "date": "03-23-2019",
+            "is_preseason": true,
+            "opposing_team": {
+              "name": "49ers",
+              "logo": "https://res.cloudinary.com/nflleague/image/private/t_q-best/league/dxibuyxbk0b9ua5ih9hn",
+              "city": "San Francisco",
+              "state": ""
+            }
           },
           {
-            "title": "Awesome Fest: Finalie!!!",
+            "title": "Pre-season WEEK 4",
             "subtitle": "A fun place for all!",
-            "time": "3:00PM",
-            "date": "03-24-2019"
+            "time": "7:00PM",
+            "date": "03-24-2019",
+            "is_preseason": true,
+            "opposing_team": {
+              "name": "Packers",
+              "logo": "https://res.cloudinary.com/nflleague/image/private/t_q-best/league/gppfvr7n8gljgjaqux2x",
+              "city": "Green Bay",
+              "state": ""
+            }
           }
         ]
       }
@@ -81,24 +181,31 @@ const result = {
       "useImage": false,
       "image": "PB_btn_green_connected.png",
       "icon": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/pytchblack/icon_connected.png",
-      "title": "Roster/Team",
+      "title": "Team",
       "target": "/option3",
       "widget": "team",
+      "header": {
+        "template": "fixed_image",
+        "logo": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/icon_calendar_selected.png",
+        "image": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/KC_header_team.jpg"
+      },
       "content": {
         "roster": [
           {
-            "firstname": "Roger",
-            "lastname": "Rabbit",
-            "position": "Running Back",
+            "firstname": "Chris",
+            "lastname": "Jones",
+            "position": "Defensive Tackle",
+            "number": "95",
             "team": "Mariners",
-            "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533"
+            "image": "https://uiwcardinals.com/images/2018/8/16/Klutts_Brooks.jpg?width=300"
           },
           {
-            "firstname": "Jim",
-            "lastname": "Stacey",
-            "position": "Linebacker",
+            "firstname": "Frank",
+            "lastname": "Clark",
+            "position": "Defensive End",
+            "number": "55",
             "team": "Yung Trap",
-            "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533"
+            "image": "https://uiwcardinals.com/images/2018/8/16/Williams_Jamarkese.jpg?width=300"
           }
         ]
       }
@@ -110,7 +217,107 @@ const result = {
       "icon": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/pytchblack/icon_loyalty.png",
       "title": "Shop",
       "target": "/option4",
-      "widget": "shop"
+      "widget": "shop",
+      "header": {
+        "template": "fixed_image",
+        "logo": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/icon_calendar_selected.png",
+        "image": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/KC_header_shop.jpg"
+      },
+      "card": {
+        "color": "white"
+      },
+      "content": {
+        "products": [
+          {
+            "id": 123,
+            "name": "Awesome T-Shirt",
+            "photos": [
+              { "image": "https://s3.us-east-2.amazonaws.com/ds-stadium-bucket/chiefs/prod_1.jpg" },
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" }
+            ],
+            "colors": [
+              { "id": 121, "label": "blue" },
+              { "id": 122, "label": "yellow" },
+              { "id": 123, "label": "green" },
+              { "id": 124, "label": "red" },
+              { "id": 125, "label": "orange" }
+            ],
+            "sizes": [
+              { "id": 101, "label": "xs" },
+              { "id": 102, "label": "sm" },
+              { "id": 103, "label": "md" },
+              { "id": 104, "label": "lg" },
+              { "id": 104, "label": "xl" }
+            ]
+          },
+          {
+            "id": 124,
+            "name": "Awesome Jacket",
+            "photos": [
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" },
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" }
+            ],
+            "colors": [
+              { "id": 121, "label": "blue" },
+              { "id": 122, "label": "yellow" },
+              { "id": 123, "label": "green" },
+              { "id": 124, "label": "red" },
+              { "id": 125, "label": "orange" }
+            ],
+            "sizes": [
+              { "id": 101, "label": "xs" },
+              { "id": 102, "label": "sm" },
+              { "id": 103, "label": "md" },
+              { "id": 104, "label": "lg" },
+              { "id": 104, "label": "xl" }
+            ]
+          },
+          {
+            "id": 125,
+            "name": "Awesome Shorts",
+            "photos": [
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" },
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" }
+            ],
+            "colors": [
+              { "id": 121, "label": "blue" },
+              { "id": 122, "label": "yellow" },
+              { "id": 123, "label": "green" },
+              { "id": 124, "label": "red" },
+              { "id": 125, "label": "orange" }
+            ],
+            "sizes": [
+              { "id": 101, "label": "xs" },
+              { "id": 102, "label": "sm" },
+              { "id": 103, "label": "md" },
+              { "id": 104, "label": "lg" },
+              { "id": 104, "label": "xl" }
+            ]
+          },
+          {
+            "id": 126,
+            "name": "Awesome Jersey",
+            "photos": [
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" },
+              { "image": "https://vignette.wikia.nocookie.net/rogerrabbit/images/4/4d/Roger_Rabbit_11.png/revision/latest?cb=20131219163533" }
+            ],
+            "colors": [
+              { "id": 121, "label": "blue" },
+              { "id": 122, "label": "yellow" },
+              { "id": 123, "label": "green" },
+              { "id": 124, "label": "red" },
+              { "id": 125, "label": "orange" }
+            ],
+            "sizes": [
+              { "id": 101, "label": "xs" },
+              { "id": 102, "label": "sm" },
+              { "id": 103, "label": "md" },
+              { "id": 104, "label": "lg" },
+              { "id": 104, "label": "xl" }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
