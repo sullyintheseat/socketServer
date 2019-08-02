@@ -24,6 +24,7 @@ let socketController = require('./controllers/index.js')
 
 require('./controllers/communication').controller(app);
 require('./controllers/metrics').controller(app);
+require('./controllers/content').controller(app);
 
 db.on('error', console.error)
 db.once('connected', function() { console.log(`${dbPath}`)})
