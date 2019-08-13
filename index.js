@@ -67,7 +67,7 @@ let socketController = require('./controllers/index.js')
 require('./controllers/communication').controller(app);
 require('./controllers/metrics').controller(app);
 require('./controllers/content').controller(app);
-require('./controllers/s3Manager').controller(app);
+require('./controllers/s3manager').controller(app);
 
 http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)
