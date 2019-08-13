@@ -48,5 +48,5 @@ const S3ManagerController = {
 module.exports.Controller = S3ManagerController
 module.exports.controller = (app) => {
   app.post('/v1/s3/test', S3ManagerController.putdata)
-  app.post('/v1/s3/ipload', S3ManagerController.uploadFile)
+  app.post('/v1/s3/upload', S3ManagerController.uploadFile)
 }
