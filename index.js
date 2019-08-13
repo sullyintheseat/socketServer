@@ -4,27 +4,26 @@ require("dotenv-safe").config({
 });
 
 const cors = require('cors');
-const mongoose = require('mongoose')
+
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
 const fs = require('fs')
 const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
-let express	= require('express');
+
+
 let path = require('path')
 var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
-const bodyParser = require('body-parser')
+
 
 app.use(cors());
 app.options('*', cors());
 
-app.all('*', function(req, res, next){ req.io	= io; next();});
 
-let socketController = require('./controllers/index.js')
-
-require('./controllers/communication').controller(app);
-require('./controllers/metrics').controller(app);
-require('./controllers/content').controller(app);
 
 db.on('error', console.error)
 db.once('connected', function() { console.log(`${dbPath}`)})
@@ -42,6 +41,13 @@ var xPolicy			    = function (req, res, next){
 };
 app.use(xPolicy);
 
+app.enable('trust proxy');
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal'])
+
+
+app.all('*', function(req, res, next){ req.io	= io; next();});
+
+
 
 app.set('port', process.env.PORT || aport);
 
@@ -54,6 +60,14 @@ app.get('/', function(req, res){
 })
 
 app.use('/', express.static(path.join(__dirname, 'web')))
+
+
+let socketController = require('./controllers/index.js')
+
+require('./controllers/communication').controller(app);
+require('./controllers/metrics').controller(app);
+require('./controllers/content').controller(app);
+require('./controllers/s3Manager').controller(app);
 
 http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)
