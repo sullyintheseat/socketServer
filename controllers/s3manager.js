@@ -35,7 +35,7 @@ const S3ManagerController = {
           
     uploadPromise.then(
       function(data) {
-        res.status(200).send(`Files Uploaded to ${Bucket}`)
+        res.status(200).send(data)
       })
       .catch(
         function(err) {
