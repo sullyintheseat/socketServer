@@ -32,9 +32,9 @@ const S3ManagerController = {
   uploadFile: async (req, res) => {
     let { Bucket, Key} = req.body
     let newbody = await AWS.util.base64.decode(req.body.BodyRaw)
-    console.log(BodyRaw)
+    console.log(req.body.BodyRaw)
     console.log('-------------------------------------------')
-    console.log(Body64)
+    console.log(req.body.Body64)
     var uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(
       {
         Bucket, 
