@@ -36,8 +36,7 @@ const S3ManagerController = {
         Bucket, 
         Key, 
         Body, 
-        ACL: 'public-read', 
-        ContentEncoding: 'base64',
+        ACL: 'public-read',
         ContentType: 'image/png',
       }
     ).promise()
