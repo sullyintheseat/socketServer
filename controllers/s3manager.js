@@ -31,7 +31,7 @@ const S3ManagerController = {
 
   uploadFile: async (req, res) => {
     let { Bucket, Key, Body} = req.body
-    var uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject({Bucket, Key, Body, ACL: 'public-read'}).promise()
+    var uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject({Bucket, Key, Body}).promise()
           
     uploadPromise.then(
       function(data) {
