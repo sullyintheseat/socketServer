@@ -14,6 +14,8 @@ const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
 
 
+mongoose.connect(dbPath, { useNewUrlParser: true } );
+
 let path = require('path')
 var app = require('express')()
 var http = require('http').Server(app)
@@ -28,7 +30,7 @@ app.options('*', cors());
 db.on('error', console.error)
 db.once('connected', function() { console.log(`${dbPath}`)})
 db.once('open', function() {
-	
+	console.log('here')
 })
 
 var xPolicy			    = function (req, res, next){

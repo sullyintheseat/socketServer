@@ -1,6 +1,7 @@
 let AWS = require('aws-sdk')
 const uuid = require('uuid')
-
+const AppImage = require('../schemas/images'
+)
 const S3ManagerController = {
 
   putdata: async (req, res) => {
@@ -30,17 +31,24 @@ const S3ManagerController = {
   },
 
   uploadFile: async (req, res) => {
-    let { Bucket, Key} = req.body
+    let { Bucket, Key, AppId} = req.body
     let newbody = await new Buffer(req.body.Body64.replace(/^data:image\/\w+;base64,/, ""),'base64')
     let str = req.body.Body64
     let result = str.match(/^data:image\/\w+;base64,/ig)
     let ContentType = result[0]
     ContentType = ContentType.replace(/^data:/ig, '')
     ContentType = ContentType.replace(/;base64,/ig, '')
-    var uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(
+    console.log(ContentType)
+
+    let imgExt = ContentType.split('/')
+
+    let imgLocation = `https://${Bucket}.s3.us-east-2.amazonaws.com/${Key}/`
+    let newimage = await AppImage.createImage({imgExt: imgExt[1], imgLocation, appId: AppId})
+    
+    let uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(
       {
         Bucket, 
-        Key, 
+        Key: `${Key}/${newimage.imgId}.${newimage.imgExt}`, 
         Body: newbody,
         ACL: 'public-read',
         ContentType
@@ -49,7 +57,7 @@ const S3ManagerController = {
           
     uploadPromise.then(
       function(data) {
-        res.status(200).send(data)
+        res.status(200).send(newimage)
       })
       .catch(
         function(err) {
