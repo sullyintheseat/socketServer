@@ -66,6 +66,7 @@ const S3ManagerController = {
             res.status(401).send(err)
         })
     } catch (err) {
+      console.log(err)
       res.status(500).send(err)
     }
   }
