@@ -32,17 +32,18 @@ const S3ManagerController = {
   uploadFile: async (req, res) => {
     let { Bucket, Key} = req.body
     let newbody = await new Buffer(req.body.Body64.replace(/^data:image\/\w+;base64,/, ""),'base64')
-    console.log(req.body.BodyRaw)
-    console.log('-------------------------------------------')
-    console.log(req.body.Body64)
+    let str = req.body.Body64
+    let result = str.match(/^data:image\/\w+;base64,/ig)
+    let ContentType = result[0]
+    ContentType = ContentType.replace(/^data:/ig, '')
+    ContentType = ContentType.replace(/;base64,/ig, '')
     var uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(
       {
         Bucket, 
         Key, 
         Body: newbody,
         ACL: 'public-read',
-        ContentEncoding: 'base64',
-        ContentType: 'image/png'
+        ContentType
       }
     ).promise()
           
