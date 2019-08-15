@@ -32,43 +32,38 @@ const S3ManagerController = {
 
   uploadFile: async (req, res) => {
     let { Bucket, Key, AppId} = req.body
-    try {
-      let newbody = await new Buffer(req.body.Body64.replace(/^data:image\/\w+;base64,/, ""),'base64')
-      let str = req.body.Body64
-      let result = str.match(/^data:image\/\w+;base64,/ig)
-      let ContentType = result[0]
-      ContentType = ContentType.replace(/^data:/ig, '')
-      ContentType = ContentType.replace(/;base64,/ig, '')
-      console.log(ContentType)
+    let newbody = await new Buffer(req.body.Body64.replace(/^data:image\/\w+;base64,/, ""),'base64')
+    let str = req.body.Body64
+    let result = str.match(/^data:image\/\w+;base64,/ig)
+    let ContentType = result[0]
+    ContentType = ContentType.replace(/^data:/ig, '')
+    ContentType = ContentType.replace(/;base64,/ig, '')
+    console.log(ContentType)
 
-      let imgExt = ContentType.split('/')
+    let imgExt = ContentType.split('/')
 
-      let imgLocation = `https://${Bucket}.s3.us-east-2.amazonaws.com/${Key}/`
-      let newimage = await AppImage.createImage({imgExt: imgExt[1], imgLocation, appId: AppId})
-      
-      let uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(
-        {
-          Bucket, 
-          Key: `${Key}/${newimage.imgId}.${newimage.imgExt}`, 
-          Body: newbody,
-          ACL: 'public-read',
-          ContentType
-        }
-      ).promise()
-            
-      uploadPromise.then(
-        function(data) {
-          res.status(200).send(newimage)
-        })
-        .catch(
-          function(err) {
-            console.log(err)
-            res.status(401).send(err)
-        })
-    } catch (err) {
-      console.log(err)
-      res.status(500).send(err)
-    }
+    let imgLocation = `https://${Bucket}.s3.us-east-2.amazonaws.com/${Key}/`
+    let newimage = await AppImage.createImage({imgExt: imgExt[1], imgLocation, appId: AppId})
+    
+    let uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(
+      {
+        Bucket, 
+        Key: `${Key}/${newimage.imgId}.${newimage.imgExt}`, 
+        Body: newbody,
+        ACL: 'public-read',
+        ContentType
+      }
+    ).promise()
+          
+    uploadPromise.then(
+      function(data) {
+        res.status(200).send(newimage)
+      })
+      .catch(
+        function(err) {
+          console.log(err)
+          res.status(401).send(err)
+      })
   }
 }
 
