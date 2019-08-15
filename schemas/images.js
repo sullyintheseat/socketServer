@@ -38,11 +38,18 @@ AppImageSchema.virtual('pathFull').get(function () {
 
 class AppImage {
   static async createImage (data) {
-    console.log(data)
     try {
       let result = await this.create(data);
       console.log(result)
       return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async getImages (query) {
+    try {
+
     } catch (error) {
       return error;
     }

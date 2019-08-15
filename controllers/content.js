@@ -348,6 +348,22 @@ const ContentController = {
     } else {
       res.status(401).send('Not found')
     }
+  },
+
+  getAllFilesByVenue: async (req, res) => {
+    try {
+      res.status(200).send('all files')
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getAllFilesByApp: async (req, res) => {
+    try {
+      res.status(200).send('all files')
+    } catch (err) {
+      res.status(500).send(err)
+    }
   }
  
 }
@@ -356,4 +372,6 @@ module.exports.Controller = ContentController;
 module.exports.controller = (app) => {
   app.get('/v1/wa/:id', ContentController.getAppConfig)
   app.get('/v1/wa', ContentController.getAppConfig)
+  app.get('/v1/wa/v/:venueId', ContentController.getAllFilesByVenue)
+  app.get('/v1/wa/a/:appId', ContentController.getAllFilesByApp)
 }
