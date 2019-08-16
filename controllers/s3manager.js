@@ -31,16 +31,20 @@ const S3ManagerController = {
   },
 
   uploadFile: async (req, res) => {
-    let { Bucket, Key, AppId} = req.body
-    let newbody
+    
     try {
-      newbody = await new Buffer(req.body.Body64.replace(/^data:image\/\w+;base64,/, ""),'base64')  
+      let { Bucket, Key, AppId} = await req.body
+      let newbody = req.body.Body64
+      console.log(newbody)
+
+
+      newbody = await new Buffer.from(req.body.Body64.replace(/^data:image\/\w+;base64,/, ""),'base64')  
       let str = req.body.Body64
       let result = str.match(/^data:image\/\w+;base64,/ig)
       let ContentType = result[0]
       ContentType = ContentType.replace(/^data:/ig, '')
       ContentType = ContentType.replace(/;base64,/ig, '')
-      console.log(ContentType)
+      
 
       let imgExt = ContentType.split('/')
 
