@@ -1,3 +1,4 @@
+const images = require ('../schemas/images')
 const result = {
   "appId": "pytchblack",
   "components": {
@@ -350,6 +351,15 @@ const ContentController = {
     }
   },
 
+  getAllFiles: async (req, res) => {
+    try {
+      let response = await images.getImages()
+      res.status(200).send(response)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   getAllFilesByVenue: async (req, res) => {
     try {
       res.status(200).send('all files')
@@ -364,6 +374,14 @@ const ContentController = {
     } catch (err) {
       res.status(500).send(err)
     }
+  },
+
+  getImageById: async (req, res) => {
+    try {
+      res.status(200).send('all files')
+    } catch (err) {
+      res.status(500).send(err)
+    }
   }
  
 }
@@ -372,6 +390,8 @@ module.exports.Controller = ContentController;
 module.exports.controller = (app) => {
   app.get('/v1/wa/:id', ContentController.getAppConfig)
   app.get('/v1/wa', ContentController.getAppConfig)
-  app.get('/v1/wa/v/:venueId', ContentController.getAllFilesByVenue)
-  app.get('/v1/wa/a/:appId', ContentController.getAllFilesByApp)
+  app.get('/v1/app/v/:venueId', ContentController.getAllFilesByVenue)
+  app.get('/v1/app/a/:appId', ContentController.getAllFilesByApp)
+  app.get('/v1/app/i/:imgId', ContentController.getImageById)
+  app.get('/v1/app/i', ContentController.getAllFiles)
 }

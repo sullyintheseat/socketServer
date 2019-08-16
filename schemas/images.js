@@ -47,9 +47,11 @@ class AppImage {
     }
   }
 
-  static async getImages (query) {
+  static async getImages () {
     try {
-
+      let result = await this.find()
+        .exec()
+      return result
     } catch (error) {
       return error;
     }
