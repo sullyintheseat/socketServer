@@ -148,7 +148,18 @@ const MetricsController = {
   addMetric: async(req, res) => {
     try {
       await Metric.createMetric(req.body)
+      console.log('done')
       res.status(200).send()
+    } catch (err) {
+      res.status(500).send('Unknown Server Response', err)
+    }
+  },
+
+  getAllData: async(req, res) => {
+    try {
+      let result = await Metric.getAllData()
+      
+      res.status(200).send(result)
     } catch (err) {
       res.status(500).send('Unknown Server Response', err)
     }
@@ -164,4 +175,5 @@ module.exports.controller = (app) => {
   app.get('/v1/data/offers', MetricsController.getOffers)
   app.get('/v1/data/totals/:brand', MetricsController.getTotals)
   app.post('/v1/metric', MetricsController.addMetric)
+  app.get('/v1/metric', MetricsController.getAllData)
 }

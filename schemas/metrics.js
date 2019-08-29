@@ -23,6 +23,10 @@ const MetricSchema = Schema({
     type: String,
     default: null
   },
+  itemPath: {
+    type: String,
+    default: null
+  },
   timeClicked: {
     type: Date,
     default: Date.now()
@@ -44,17 +48,32 @@ const MetricSchema = Schema({
 class Metric {
   static async createMetric (data) {
     try {
-      let result = await this.create(data);
-      console.log(result)
-      return result;
+      
+      if(data.offerAccepted === undefined || data.offerAccepted === null || !data.offerAccepted) {
+        data.offerAccepted = false
+      }
+      let result = await this.create(data)
+      console.log('here')
+      return result
     } catch (error) {
-      return error;
+      console.log('there ' + error)
+      return error
     }
   }
 
   static async getMetricsBy (query) {
     try {
       let result = await this.find({query})
+        .exec()
+      return result
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async getAllData () {
+    try {
+      let result = await this.find()
         .exec()
       return result
     } catch (error) {
