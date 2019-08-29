@@ -1,3 +1,5 @@
+const Metric = require('../schemas/metrics')
+
 const offers= [
   {
     type: "offer",
@@ -141,7 +143,15 @@ const MetricsController = {
     } catch (err) {
       res.status(500).send('Unknown Server Response', err)
     }
-  
+  },
+
+  addMetric: async(req, res) => {
+    try {
+      await Metric.createMetric(req.body)
+      res.status(200).send()
+    } catch (err) {
+      res.status(500).send('Unknown Server Response', err)
+    }
   }
 }
 
@@ -153,4 +163,5 @@ module.exports.controller = (app) => {
   app.get('/v1/data/promos', MetricsController.getPromos)
   app.get('/v1/data/offers', MetricsController.getOffers)
   app.get('/v1/data/totals/:brand', MetricsController.getTotals)
+  app.post('/v1/metric', MetricsController.addMetric)
 }
