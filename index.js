@@ -13,19 +13,15 @@ const fs = require('fs')
 const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
 
-
 mongoose.connect(dbPath, { useNewUrlParser: true } );
 
 let path = require('path')
-var app = require('express')()
-var http = require('http').Server(app)
-var io = require('socket.io')(http)
-
+let app = require('express')()
+let http = require('http').Server(app)
+let io = require('socket.io')(http)
 
 app.use(cors());
 app.options('*', cors());
-
-
 
 db.on('error', console.error)
 db.once('connected', function() { console.log(`${dbPath}`)})
