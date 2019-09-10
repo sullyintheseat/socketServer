@@ -1,4 +1,4 @@
-const Metric = require('../schemas/metrics')
+const Metric = require('../schemas/metrics.schema')
 
 const offers= [
   {
@@ -158,8 +158,24 @@ const MetricsController = {
   getAllData: async(req, res) => {
     try {
       let result = await Metric.getAllData()
-      
       res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send('Unknown Server Response', err)
+    }
+  },
+
+  deleteAll: async (req, res) => {
+    try {
+      res.status(200).send('will delete all')
+    } catch (err) {
+      res.status(500).send('Unknown Server Response', err)
+    }
+  },
+
+  deleteOne: async (req, res) => {
+    try {
+      //let result = await Metric.getAllData()
+      res.status(200).send(req.params.id)
     } catch (err) {
       res.status(500).send('Unknown Server Response', err)
     }
@@ -176,4 +192,6 @@ module.exports.controller = (app) => {
   app.get('/v1/data/totals/:brand', MetricsController.getTotals)
   app.post('/v1/metric', MetricsController.addMetric)
   app.get('/v1/metric', MetricsController.getAllData)
+  app.delete('/v1/metrics', MetricsController.deleteAll)
+  app.delete('/v1/metric/:id', MetricsController.deleteOne)
 }

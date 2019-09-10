@@ -1,7 +1,7 @@
 let AWS = require('aws-sdk')
 const uuid = require('uuid')
-const AppImage = require('../schemas/images'
-)
+const AppImage = require('../schemas/images')
+
 const S3ManagerController = {
 
   putdata: async (req, res) => {

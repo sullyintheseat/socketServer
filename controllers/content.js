@@ -1,4 +1,6 @@
 const images = require ('../schemas/images')
+const brand = require('../schemas/brand.schema')
+
 const result = {
   "appId": "pytchblack",
   "components": {
@@ -382,12 +384,30 @@ const ContentController = {
     } catch (err) {
       res.status(500).send(err)
     }
-  }
- 
+  },
+
+  getBrand: async (req, res) => {
+    try {
+      let result = await brand.getItem({appId: req.params.id})
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getModules: async (req, res) => {
+    try {
+      res.status(200).send('all files')
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
 }
 
 module.exports.Controller = ContentController;
 module.exports.controller = (app) => {
+  app.get('/v1/wa/:id/branding', ContentController.getBrand)
+  app.get('/v1/wa/:id/modules', ContentController.getModules)
   app.get('/v1/wa/:id', ContentController.getAppConfig)
   app.get('/v1/wa', ContentController.getAppConfig)
   app.get('/v1/app/v/:venueId', ContentController.getAllFilesByVenue)
