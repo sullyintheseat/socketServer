@@ -9,7 +9,7 @@ const ModuleSchema = Schema({
   toObject: { virtuals: true },
   toJSON: { virtuals: true },
   id: false,
-  collection: 'brands' 
+  collection: 'modules' 
 })
 
 
