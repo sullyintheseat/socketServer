@@ -3,28 +3,6 @@ const Schema = mongoose.Schema
 const shortId = require('shortid')
 
 const ModuleSchema = Schema({
-  brandShort: {
-    type: String,
-    default: shortId.generate,
-    required: true
-  },
-  name: {
-    type: String, 
-    default: null,
-    requried: true
-  },
-  deleted: {
-    type: Boolean,
-    default: false
-  },
-  venueId:  {
-    type: String,
-    default: null
-  },
-  deleted: {
-    type: Boolean,
-    default: false
-  }
 },
 {
   timestamps: true,
@@ -37,7 +15,7 @@ const ModuleSchema = Schema({
 
 class Module {
   
-  async createItem (appData) {
+  static async createItem (appData) {
     try {
 
     } catch(error) {
@@ -45,7 +23,15 @@ class Module {
     }
   }
 
-  async getItem (query) {
+  static async getItem (query) {
+    try {
+      return await this.findOne(query).exec()
+    } catch(error) {
+      return false
+    }
+  }
+
+  static async getItems () {
     try {
 
     } catch(error) {
@@ -53,7 +39,7 @@ class Module {
     }
   }
 
-  async getItems () {
+  static async updateItem (appId) {
     try {
 
     } catch(error) {
@@ -61,15 +47,7 @@ class Module {
     }
   }
 
-  async updateItem (appId) {
-    try {
-
-    } catch(error) {
-      return false
-    }
-  }
-
-  async deleteItem (appId) {
+  static async deleteItem (appId) {
     try {
 
     } catch(error) {

@@ -1,6 +1,6 @@
 const images = require ('../schemas/images')
 const brand = require('../schemas/brand.schema')
-
+const modules = require('../schemas/module.schema')
 const result = {
   "appId": "pytchblack",
   "components": {
@@ -397,7 +397,8 @@ const ContentController = {
 
   getModules: async (req, res) => {
     try {
-      res.status(200).send('all files')
+      let result = await modules.getItem({appId: req.params.id})
+      res.status(200).send(result)
     } catch (err) {
       res.status(500).send(err)
     }
