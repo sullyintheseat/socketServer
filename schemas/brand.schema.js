@@ -6,9 +6,7 @@ const BrandSchema = Schema({
   appId: {
     type: String,
     required: true
-  },
-  components: [],
-  colors: []
+  }
 },
 {
   timestamps: true,
