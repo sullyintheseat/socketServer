@@ -403,6 +403,53 @@ const ContentController = {
       res.status(500).send(err)
     }
   },
+
+  createModule: async (req, res) => {
+    try {
+      let result = await modules.createItem(req.body)
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getModule: async (req, res) => {
+    let result
+    try {
+      if(req.params.id) {
+        result = await modules.getItem(req.params.id)
+        res.status(200).send(result)
+      } else {
+        result = await modules.getItems()
+        res.status(200).send(result)
+      }
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getItemById: async (req, res) => {
+    let result
+    try {
+      if(req.params.modId) {
+        result = await modules.getItemById(req.params.modId)
+        res.status(200).send(result)
+      } else {
+        res.status(401).send('Required parameter missing')
+      }
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getModules2: async (req, res) => {
+    try {
+      let result = await modules.getAllMods({appId: req.params.id})
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
 }
 
 module.exports.Controller = ContentController;
@@ -415,4 +462,14 @@ module.exports.controller = (app) => {
   app.get('/v1/app/a/:appId', ContentController.getAllFilesByApp)
   app.get('/v1/app/i/:imgId', ContentController.getImageById)
   app.get('/v1/app/i', ContentController.getAllFiles)
+  
+  app.get('/v1/app/moduleBy/:modId', ContentController.getItemById)
+  app.get('/v1/app/moduleBy/', ContentController.getItemById)
+
+  app.get('/v1/app/:id/modules', ContentController.getModules2)
+  app.get('/v1/app/module/:id', ContentController.getModule)
+  app.get('/v1/app/module/', ContentController.getModule)
+  app.post('/v1/app/module', ContentController.createModule)
+
+
 }
