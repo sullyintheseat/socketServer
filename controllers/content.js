@@ -466,9 +466,11 @@ module.exports.controller = (app) => {
   app.get('/v1/app/moduleBy/:modId', ContentController.getItemById)
   app.get('/v1/app/moduleBy/', ContentController.getItemById)
 
-  app.get('/v1/app/:id/modules', ContentController.getModules2)
   app.get('/v1/app/module/:id', ContentController.getModule)
   app.get('/v1/app/module/', ContentController.getModule)
+  
+  app.get('/v1/app/:id/branding', ContentController.getBrand)
+  app.get('/v1/app/:id/modules', ContentController.getModules2)
   app.post('/v1/app/module', ContentController.createModule)
 
 
