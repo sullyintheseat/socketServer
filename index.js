@@ -13,7 +13,7 @@ const fs = require('fs')
 const dbPath = process.env.MONGODB_URI
 const db = mongoose.connection
 
-mongoose.connect(dbPath, { useNewUrlParser: true } );
+mongoose.connect(dbPath, { useNewUrlParser: true, useFindAndModify: false } );
 
 let path = require('path')
 let app = require('express')()

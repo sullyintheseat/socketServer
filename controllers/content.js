@@ -442,6 +442,21 @@ const ContentController = {
     }
   },
 
+  updateModule: async (req, res) => {
+    let result
+    let module = req.body
+    try {
+      if(module) {
+        result = await modules.updateItem(module)
+        res.status(200).send(result)
+      } else {
+        res.status(401).send('Required parameter missing')
+      }
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   getModules2: async (req, res) => {
     try {
       let result = await modules.getAllMods({appId: req.params.id})
@@ -472,6 +487,7 @@ module.exports.controller = (app) => {
   app.get('/v1/app/:id/branding', ContentController.getBrand)
   app.get('/v1/app/:id/modules', ContentController.getModules2)
   app.post('/v1/app/module', ContentController.createModule)
+  app.put('/v1/app/module',  ContentController.updateModule)
 
 
 }
