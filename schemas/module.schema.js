@@ -134,12 +134,14 @@ class Module {
     }
   }
 
-  static async updateItem (module) {
+  static async updateItem (modId, module) {
     try {
       return await this.findOneAndUpdate(
-          {modId: module.modId},
-          module
+          {modId: modId},
+          module,
+          {new: true}
         )
+      
     } catch(error) {
       return error
     }
