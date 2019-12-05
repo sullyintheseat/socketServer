@@ -15,7 +15,7 @@ const StatsController = {
       // generate signature
       var sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
     
-      request('http://api.stats.com/v1/stats/basketball/cbk/box/' + eventId+ '?accept=json&api_key=' + apiKey + '&sig=' + sig,
+      request('http://api.stats.com/v1/stats/basketball/cbk/box/' + eventId+ '?accept=json&api_key=' + apiKey + '&sig=' + sig + '&box=true',
           function (err, response, body) {
             // parse the body as JSON
             var parsedBody = JSON.parse(body);

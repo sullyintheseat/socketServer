@@ -68,12 +68,12 @@ const ModuleSchema = Schema({
     logo: {
       type: String,
       default: null,
-      required: true
+      required: false
     },
     image: {
       type: String,
       default: null,
-      required: true
+      required: false
     }
   }
 },
