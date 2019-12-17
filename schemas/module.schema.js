@@ -119,6 +119,7 @@ class Module {
   static async getAllMods (appId) {
     try {
       return await this.find(appId)
+        .sort({sortId: 1})
         .exec()
     } catch(error) {
       return false
