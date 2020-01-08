@@ -13266,5 +13266,5 @@ module.exports.controller = (app) => {
   app.get('/v1/stats/mock', StatsController.statsMock)
   app.get('/v1/stats/:eventId', StatsController.test)
   app.get('/v1/events', StatsController.events)
-  app.get('/v1/inisghts/mock', StatsController.insightsMock)
+  app.get('/v1/insights/mock', StatsController.insightsMock)
 }
