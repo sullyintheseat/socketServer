@@ -3,9 +3,17 @@ const Schema = mongoose.Schema
 const shortId = require('shortid')
 
 const BrandSchema = Schema({
-  appId: {
+  targetId: {
     type: String,
     required: true
+  },
+  deviceId:{
+    type: String,
+    default: null
+  },
+  questionId: {
+    type: String,
+    default: null
   }
 },
 {
@@ -13,7 +21,7 @@ const BrandSchema = Schema({
   toObject: { virtuals: true },
   toJSON: { virtuals: true },
   id: false,
-  collection: 'brands' 
+  collection: 'surveys' 
 })
 
 
@@ -21,7 +29,8 @@ class Brand {
   
   static async createItem (appData) {
     try {
-
+      let result = await this.create(data)
+      return result
     } catch(error) {
       return false
     }
@@ -37,7 +46,7 @@ class Brand {
 
   static async getItems () {
     try {
-
+      return await this.find().exec()
     } catch(error) {
       return false
     }
