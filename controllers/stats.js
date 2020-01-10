@@ -13250,12 +13250,12 @@ const StatsController = {
       let sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
       //api.stats.com/v1/stats/football/cfb/events/2162374?box=true&insights=true&accept=json
       request('http://api.stats.com/v1/stats/basketball/cbk/events/?accept=json&api_key=' + apiKey + '&sig=' + sig,
-          function (err, response, body) {
-            // parse the body as JSON
-            console.log(err);
-            var parsedBody = JSON.parse(body);
-            res.json(parsedBody);
-          });
+				function (err, response, body) {
+					// parse the body as JSON
+					console.log(err);
+					var parsedBody = JSON.parse(body);
+					res.json(parsedBody);
+				});
     } catch (err) {
       res.status(500).send(err)
     }
@@ -13269,12 +13269,20 @@ const StatsController = {
       let sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
       //api.stats.com/v1/stats/football/cfb/events/2162374?box=true&insights=true&accept=json
       request('http://api.stats.com/v1/stats/football/cfb/events/2162374?box=true&insights=true&accept=json&api_key=' + apiKey + '&sig=' + sig,
-          function (err, response, body) {
-            // parse the body as JSON
-            console.log(err);
-            var parsedBody = JSON.parse(body);
-            res.json(parsedBody);
-          });
+				function (err, response, body) {
+					// parse the body as JSON
+					console.log(err);
+					var parsedBody = JSON.parse(body);
+					res.json(parsedBody);
+				});
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getRosters: async (req, res) => {
+    try {
+
     } catch (err) {
       res.status(500).send(err)
     }
@@ -13289,6 +13297,8 @@ module.exports.controller = (app) => {
   
   app.get('/v1/insights/mock', StatsController.insightsMock)
   app.get('/v1/insights', StatsController.insights)
+
+  app.get('/v1/rosters', StatsController.getRosters)
 
   app.get('/v1/events', StatsController.events)
   

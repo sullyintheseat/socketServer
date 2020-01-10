@@ -1,17 +1,28 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const shortId = require('shortid')
 
-const BrandSchema = Schema({
-  targetId: {
+const SurveySchema = Schema({
+  tagId: {
     type: String,
     required: true
   },
-  deviceId:{
+  q1: {
     type: String,
     default: null
   },
-  questionId: {
+  q2: {
+    type: String,
+    default: null
+  },
+  q3: {
+    type: String,
+    default: null
+  },
+  q4: {
+    type: String,
+    default: null
+  },
+  q5: {
     type: String,
     default: null
   }
@@ -25,11 +36,11 @@ const BrandSchema = Schema({
 })
 
 
-class Brand {
+class Survey {
   
   static async createItem (appData) {
     try {
-      let result = await this.create(data)
+      let result = await this.create(appData)
       return result
     } catch(error) {
       return false
@@ -51,24 +62,8 @@ class Brand {
       return false
     }
   }
-
-  static async updateItem (appId) {
-    try {
-
-    } catch(error) {
-      return false
-    }
-  }
-
-  static async deleteItem (appId) {
-    try {
-
-    } catch(error) {
-      return false
-    }
-  }
 }
 
-BrandSchema.loadClass(Brand)
+SurveySchema.loadClass(Survey)
 
-module.exports = mongoose.model('BrandItem', BrandSchema)
+module.exports = mongoose.model('SurveyItem', SurveySchema)

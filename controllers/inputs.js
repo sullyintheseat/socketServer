@@ -1,7 +1,7 @@
 const Input = require('../schemas/survey.schema')
 
 const InputController = {
-  test: async (req, res) => {
+  addEntry: async (req, res) => {
     try {
       res.status(200).send('all files')
     } catch (err) {
@@ -12,5 +12,5 @@ const InputController = {
 
 module.exports.Controller = InputController;
 module.exports.controller = (app) => {
-  app.get('/v1/app', InputController.test)
+  app.post('/v1/survey', InputController.addEntry)
 }
