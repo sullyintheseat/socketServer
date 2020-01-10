@@ -13304,19 +13304,18 @@ const StatsController = {
     }
 	},
 	
-  getRosters: async (req, res) => {
+	getRosterBy: async (req, res) => {
     try {
       let timeFromEpoch = moment.utc().unix();
       let apiKey = process.env.SP_API_KEY;
-      let secret = process.env.SP_API_SECRET;
+			let secret = process.env.SP_API_SECRET;
       let sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
-      request('http://api.stats.com/v1/stats/football/cfb/participants/teams/3407?accept=json&api_key=' + apiKey + '&sig=' + sig,
-				function (err, response, body) {
-					// parse the body as JSON
-					console.log(err);
-					var parsedBody = JSON.parse(body);
-					res.json(parsedBody);
-				});
+      request('http://api.stats.com/v1/stats/football/cfb/participants/teams/' +req.params.id + '?accept=json&api_key=' + apiKey + '&sig=' + sig,
+				function (err, response, body) {	
+					let parsedBody = JSON.parse(body);			
+					res.status(200).send(parsedBody.apiResults[0].league.players);
+				}
+			)
     } catch (err) {
       res.status(500).send(err)
     }
@@ -13333,7 +13332,7 @@ module.exports.controller = (app) => {
   app.get('/v1/insights/mock', StatsController.insightsMock)
   app.get('/v1/insights', StatsController.insights)
 
-  app.get('/v1/rosters', StatsController.getRosters)
+	app.get('/v1/roster/:id', StatsController.getRosterBy)
 
   app.get('/v1/events', StatsController.events)
   
