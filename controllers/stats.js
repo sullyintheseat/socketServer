@@ -13280,9 +13280,43 @@ const StatsController = {
     }
   },
 
+	cfp: async (req, res) => {
+    try {
+      let eventId = req.params.eventId;
+      let timeFromEpoch = moment.utc().unix();
+      let apiKey = process.env.SP_API_KEY;
+      let secret = process.env.SP_API_SECRET;
+    
+      eventId = '2188785';
+    
+      // generate signature
+      let sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
+    
+      request('http://api.stats.com/v1/stats/football/cfb/events/2162374?box=true&accept=json&api_key=' + apiKey + '&sig=' + sig,
+          function (err, response, body) {
+						// parse the body as JSON
+						console.log(err)
+            var parsedBody = JSON.parse(body);
+            res.json(parsedBody);
+          });
+    } catch (err) {
+      res.status(500).send(err)
+    }
+	},
+	
   getRosters: async (req, res) => {
     try {
-
+      let timeFromEpoch = moment.utc().unix();
+      let apiKey = process.env.SP_API_KEY;
+      let secret = process.env.SP_API_SECRET;
+      let sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
+      request('http://api.stats.com/v1/stats/football/cfb/participants/teams/3407?accept=json&api_key=' + apiKey + '&sig=' + sig,
+				function (err, response, body) {
+					// parse the body as JSON
+					console.log(err);
+					var parsedBody = JSON.parse(body);
+					res.json(parsedBody);
+				});
     } catch (err) {
       res.status(500).send(err)
     }
@@ -13292,7 +13326,8 @@ const StatsController = {
 
 module.exports.Controller = StatsController;
 module.exports.controller = (app) => {
-  app.get('/v1/stats/mock', StatsController.statsMock)
+	app.get('/v1/stats/mock', StatsController.statsMock)
+	app.get('/v1/stats/cfp', StatsController.cfp)
   app.get('/v1/stats/:eventId', StatsController.test)
   
   app.get('/v1/insights/mock', StatsController.insightsMock)
