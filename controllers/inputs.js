@@ -3,7 +3,8 @@ const Input = require('../schemas/survey.schema')
 const InputController = {
   addEntry: async (req, res) => {
     try {
-      res.status(200).send('all files')
+      let data = req.body;
+      return await Input.createItem(data)
     } catch (err) {
       res.status(500).send(err)
     }
