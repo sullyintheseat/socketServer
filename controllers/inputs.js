@@ -18,7 +18,7 @@ const InputController = {
   },
 
   surveyActive: async (req, res) => {
-    if(req.params.calue === 'show') {
+    if(req.params.value === 'show') {
       res.status(200).send({isActive: true})
     } else {
       res.status(200).send({isActive: false})
