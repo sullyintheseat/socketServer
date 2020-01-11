@@ -15,10 +15,19 @@ const InputController = {
     } catch (err) {
       res.status(500).send(err)
     }
+  },
+
+  surveyActive: async (req, res) => {
+    if(req.params.calue === 'show') {
+      res.status(200).send({isActive: true})
+    } else {
+      res.status(200).send({isActive: false})
+    }
   }
 }
 
 module.exports.Controller = InputController;
 module.exports.controller = (app) => {
   app.post('/v1/survey', InputController.addEntry)
+  app.get('/v1/survey/status/:value', InputController.surveyActive)
 }
