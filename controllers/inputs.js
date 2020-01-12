@@ -54,6 +54,8 @@ const InputController = {
 
   metrics: async (req, res) => {
     try {
+      let data = req.body;
+      await Analytic.addAnalytic(data);
       res.status(200).send('ok')
     } catch (err) {
       res.status(500).send(err)
