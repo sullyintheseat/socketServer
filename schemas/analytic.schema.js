@@ -7,9 +7,33 @@ const AnalyticSchema = Schema({
     required: true,
     index: true
   },
-  venueId: {
+  tagId: {
     type: String,
     default: null
+  },
+  navigation: {
+    to: {
+      type: String,
+      default: null
+    },
+    from: {
+      type: String,
+      default: null
+    },
+    itemClicked: {
+      type: String,
+      default: null
+    }
+  },
+  call_to_action: {
+    to: {
+      type: String,
+      default: null
+    },
+    from: {
+      type: String,
+      default: null
+    }
   }
 },
 {
