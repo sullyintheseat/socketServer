@@ -37,6 +37,6 @@ const InputController = {
 module.exports.Controller = InputController;
 module.exports.controller = (app) => {
   app.post('/v1/survey', InputController.addEntry)
-  app.post('/v1/metrics', InputController,metrics)
+  app.post('/v1/metrics', InputController.metrics)
   app.get('/v1/survey/status/:value', InputController.surveyActive)
 }
