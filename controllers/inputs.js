@@ -33,7 +33,8 @@ const InputController = {
             function (err, response, body) {
               // parse the body as JSON
               let parsedBody = JSON.parse(body);
-              let val = parseFloat(parsedBody.apiResults[0].league.season.eventType[0].events[0].eventStatus.eventStatusId)
+              let val = parseFloat(parsedBody.apiResults[0].league.season.eventType[0].events[0].eventStatus.period)
+              console.log(val)
               if( val <= 2) {
                 res.status(200).send({isActive: false})
               } else {
