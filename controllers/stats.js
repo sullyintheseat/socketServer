@@ -13292,7 +13292,7 @@ const StatsController = {
       // generate signature
       let sig = crypto.createHash('sha256').update(apiKey + secret + timeFromEpoch).digest('hex');
     
-      request('http://api.stats.com/v1/stats/football/cfb/events/2162374?box=true&pbp=true&accept=json&api_key=' + apiKey + '&sig=' + sig,
+      request('http://api.stats.com/v1/stats/football/cfb/events/2162374?box=true&Pbp=true&driveCharts=true&accept=json&api_key=' + apiKey + '&sig=' + sig,
           function (err, response, body) {
 						// parse the body as JSON
 						console.log(err)
