@@ -54,8 +54,8 @@ const StatsPerformController = {
         }
         let timeFromEpoch = moment.utc().unix()
         let sig = crypto.createHash('sha256').update(apiKey + secret +timeFromEpoch).digest('hex')
-        request('http://api.stats.com/v1/stats/basketball/cbk/events/?accept=json&api_key=' + apiKey + '&sig=' + sig,
-          function (err, response, body) {
+        request(`http://api.stats.com/v1/stats/${query}/events/?accept=json&api_key=${apiKey}&sig=${sig}`,
+          (err, response, body) => {
             var parsedBody = JSON.parse(body)
             res.json(parsedBody)
           }
