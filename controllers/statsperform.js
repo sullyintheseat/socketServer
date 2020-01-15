@@ -67,6 +67,38 @@ const StatsPerformController = {
       res.status(401).send('Required field missing')
     }
   },
+
+  //http://api.stats.com/v1/decode/basketball/cbk/venues?accept=json
+  venues: async (req, res) => {
+    if(req.params.league) {
+      try {
+        let query
+        switch (req.params.league) {
+          case 'cbk':
+            query = 'basketball/cbk'
+            break
+          case 'cfb':
+            query = 'football/cfb'
+            break
+          default:
+            query = 'basketball/cbk'
+            break
+        }
+        let timeFromEpoch = moment.utc().unix()
+        let sig = crypto.createHash('sha256').update(apiKey + secret +timeFromEpoch).digest('hex')
+        request(`http://api.stats.com/v1/decode/${query}/venues?accept=json&api_key=${apiKey}&sig=${sig}`,
+          (err, response, body) => {
+            var parsedBody = JSON.parse(body)
+            res.json(parsedBody)
+          }
+        )
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    } else {
+      res.status(401).send('Required field missing')
+    }
+  },
 }
 
 module.exports.Controller = StatsPerformController;
@@ -75,4 +107,6 @@ module.exports.controller = (app) => {
   app.get('/v1/sp/teams/', StatsPerformController.teams)
   app.get('/v1/sp/events/:league', StatsPerformController.events)
   app.get('/v1/sp/events', StatsPerformController.events)
+  app.get('/v1/sp/venues/:league', StatsPerformController.venues)
+  app.get('/v1/sp/venues', StatsPerformController.venues)
 }
