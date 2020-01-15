@@ -61,6 +61,16 @@ const InputController = {
     } catch (err) {
       res.status(500).send(err)
     }
+  },
+
+  getMetrics: async (req, res) => {
+    try {
+      let data = await Analytic.getAllData()
+  
+      res.status(200).send(data)
+    } catch (err) {
+      res.status(500).send(err)
+    }
   }
 }
 
@@ -68,6 +78,7 @@ module.exports.Controller = InputController;
 module.exports.controller = (app) => {
   app.post('/v1/survey', InputController.addEntry)
   app.post('/v1/metrics', InputController.metrics)
+  app.get('/v1/metrics', InputController.getMetrics)
   app.get('/v1/survey/status/:value', InputController.surveyActive)
   app.get('/v1/survey/status/', InputController.surveyActive)
 }

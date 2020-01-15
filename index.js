@@ -69,6 +69,7 @@ require('./controllers/s3manager').controller(app);
 require('./controllers/application').controller(app);
 require('./controllers/stats').controller(app);
 require('./controllers/inputs').controller(app);
+require('./controllers/statsperform').controller(app);
 
 http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)

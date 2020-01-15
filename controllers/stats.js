@@ -13325,15 +13325,14 @@ const StatsController = {
 
 module.exports.Controller = StatsController;
 module.exports.controller = (app) => {
-	app.get('/v1/stats/mock', StatsController.statsMock)
-	app.get('/v1/stats/cfp', StatsController.cfp)
-  app.get('/v1/stats/:eventId', StatsController.test)
-  
-  app.get('/v1/insights/mock', StatsController.insightsMock)
-  app.get('/v1/insights', StatsController.insights)
+    app.get('/v1/stats/mock', StatsController.statsMock)
+    app.get('/v1/v1/roster/:id/stats/cfp', StatsController.cfp)
+    app.get('/v1/stats/:eventId', StatsController.test)
 
-	app.get('/v1/roster/:id', StatsController.getRosterBy)
+    app.get('/v1/insights/mock', StatsController.insightsMock)
+    app.get('/v1/insights', StatsController.insights)
 
-  app.get('/v1/events', StatsController.events)
+    app.get('', StatsController.getRosterBy)
+    app.get('/v1/events', StatsController.events)
   
 }

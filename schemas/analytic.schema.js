@@ -67,8 +67,7 @@ class Analytic {
 
   static async getAllData () {
     try {
-      let result = await this.find()
-        .exec()
+      let result = await this.find().exec()
       return result
     } catch (error) {
       return error;
