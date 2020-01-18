@@ -1,29 +1,12 @@
-const moment = require('moment')
-const crypto = require('crypto')
+const helpers = require('../utils/helpers')
 const request = require('request')
-
-const apiKey = process.env.SP_API_KEY;
-const secret = process.env.SP_API_SECRET;
 
 const StatsPerformController = {
   teams: async (req, res) => {
     if(req.params.league) {
       try {
-        let query
-        switch (req.params.league) {
-          case 'cbk':
-            query = 'basketball/cbk'
-            break
-          case 'cfb':
-            query = 'football/cfb'
-            break
-          default:
-            query = 'basketball/cbk'
-            break
-        }
-        let timeFromEpoch = moment.utc().unix()
-        let sig = crypto.createHash('sha256').update(apiKey + secret +timeFromEpoch).digest('hex')
-        request(`http://api.stats.com/v1/stats/${query}/teams/?accept=json&api_key=${apiKey}&sig=${sig}`,
+        let query = helpers.getQuery(req.params.league)
+        request(`http://api.stats.com/v1/stats/${query}/teams/${helpers.getSPAuth()}`,
           (err, response, body) => {
             let parsedBody = JSON.parse(body)
             res.status(200).send(parsedBody)
@@ -40,21 +23,8 @@ const StatsPerformController = {
   events: async (req, res) => {
     if(req.params.league) {
       try {
-        let query
-        switch (req.params.league) {
-          case 'cbk':
-            query = 'basketball/cbk'
-            break
-          case 'cfb':
-            query = 'football/cfb'
-            break
-          default:
-            query = 'basketball/cbk'
-            break
-        }
-        let timeFromEpoch = moment.utc().unix()
-        let sig = crypto.createHash('sha256').update(apiKey + secret +timeFromEpoch).digest('hex')
-        request(`http://api.stats.com/v1/stats/${query}/events/?accept=json&api_key=${apiKey}&sig=${sig}`,
+        let query = helpers.getQuery(req.params.league)
+        request(`http://api.stats.com/v1/stats/${query}/events/${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
             res.json(parsedBody)
@@ -68,25 +38,11 @@ const StatsPerformController = {
     }
   },
 
-  //http://api.stats.com/v1/decode/basketball/cbk/venues?accept=json
   venues: async (req, res) => {
     if(req.params.league) {
       try {
-        let query
-        switch (req.params.league) {
-          case 'cbk':
-            query = 'basketball/cbk'
-            break
-          case 'cfb':
-            query = 'football/cfb'
-            break
-          default:
-            query = 'basketball/cbk'
-            break
-        }
-        let timeFromEpoch = moment.utc().unix()
-        let sig = crypto.createHash('sha256').update(apiKey + secret +timeFromEpoch).digest('hex')
-        request(`http://api.stats.com/v1/decode/${query}/venues?accept=json&api_key=${apiKey}&sig=${sig}`,
+        let query = helpers.getQuery(req.params.league)
+        request(`http://api.stats.com/v1/decode/${query}/venues${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
             res.json(parsedBody)
@@ -99,14 +55,45 @@ const StatsPerformController = {
       res.status(401).send('Required field missing')
     }
   },
+
+  venue: async (req, res) => {
+    if(req.params.venueId) {
+      try {
+        let query = helpers.getQuery(req.params.league)
+        request(`http://api.stats.com/v1/decode/${query}/venues/${req.params.venueId}${helpers.getSPAuth()}`,
+          (err, response, body) => {
+            var parsedBody = JSON.parse(body)
+            res.json(parsedBody)
+          }
+        )
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    } else {
+      res.status(401).send('Required field missing')
+    }
+  },
+
+  teamRoster: async (req, res) => {
+    try {
+
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  }
 }
 
 module.exports.Controller = StatsPerformController;
 module.exports.controller = (app) => {
-  app.get('/v1/sp/teams/:league', StatsPerformController.teams)
-  app.get('/v1/sp/teams/', StatsPerformController.teams)
-  app.get('/v1/sp/events/:league', StatsPerformController.events)
-  app.get('/v1/sp/events', StatsPerformController.events)
+  // venues
+  app.get('/v1/sp/venue/:league/:venueId', StatsPerformController.venue)
   app.get('/v1/sp/venues/:league', StatsPerformController.venues)
   app.get('/v1/sp/venues', StatsPerformController.venues)
+  // teams
+  app.get('/v1/sp/teams/:league', StatsPerformController.teams)
+  app.get('/v1/sp/teams/', StatsPerformController.teams)
+  
+  //leagues
+  app.get('/v1/sp/events/:league', StatsPerformController.events)
+  app.get('/v1/sp/events', StatsPerformController.events)
 }
