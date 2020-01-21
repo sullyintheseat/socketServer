@@ -75,7 +75,7 @@ const InputController = {
 
   signUp: async (req, res) => {
     try{
-      res.status(200).semnd('ok')
+      res.status(200).send('ok')
     } catch (err) {
       res.status(500).send(err)
     }
