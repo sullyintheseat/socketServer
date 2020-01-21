@@ -42,11 +42,19 @@ const StatsPerformController = {
   },
 
   events: async (req, res) => {
-    if(req.params.league) {
+    let season = req.params.season
+    let team = req.params.teamId
+    let sport = req.params.league
+
+    if(season && team && sport) {
       try {
-        let sport = helpers.getSport(req.params.league)
-        console.log(`${apiroot}stats/${sport}/events/${helpers.getSPAuth()}`)
-        request(`${apiroot}stats/${sport}/events/${helpers.getSPAuth()}`,
+      
+        season = `season=${req.params.season}`
+        
+        sport = helpers.getSport(sport)
+        console.log(`${apiroot}stats/${sport}/scores/teams/${team}${helpers.getSPAuth()}&${season}`)
+
+        request(`${apiroot}stats/${sport}/scores/teams/${team}${helpers.getSPAuth()}&${season}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
             res.status(200).send(parsedBody)
@@ -96,7 +104,7 @@ const StatsPerformController = {
     }
   },
 
-  teamRoster: async (req, res) => {
+  gmaeStats: async (req, res) => {
     try {
 
     } catch (err) {
@@ -118,6 +126,6 @@ module.exports.controller = (app) => {
   app.get('/v1/sp/team/:league/:teamId', StatsPerformController.team)
   
   //leagues
-  app.get('/v1/sp/events/:league', StatsPerformController.events)
-  app.get('/v1/sp/events', StatsPerformController.events)
+  app.get('/v1/sp/events/:league/:teamId/:season', StatsPerformController.events)
+  // app.get('/v1/sp/events', StatsPerformController.events)
 }

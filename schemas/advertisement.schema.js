@@ -77,7 +77,7 @@ class Advertisement {
   async deleteItem (appId) {
     try {
 
-    } catch(erroe) {
+    } catch(error) {
       return false
     }
   }
