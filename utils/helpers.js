@@ -11,11 +11,14 @@ const helpers = {
     return `?accept=json&api_key=${apiKey}&sig=${sig}`
   },
 
-  getQuery (val) {
+  getSport (val) {
     let query
     switch (val) {
       case 'cbk':
         query = 'basketball/cbk'
+        break
+      case 'cbk':
+        query = 'basketball/wcbk'
         break
       case 'cfb':
         query = 'football/cfb'

@@ -1,12 +1,31 @@
 const helpers = require('../utils/helpers')
 const request = require('request')
-
+const apiroot = process.env.SP_API_ROOT
 const StatsPerformController = {
   teams: async (req, res) => {
     if(req.params.league) {
       try {
-        let query = helpers.getQuery(req.params.league)
-        request(`http://api.stats.com/v1/stats/${query}/teams/${helpers.getSPAuth()}`,
+        let sport = helpers.getSport(req.params.league)
+        request(`${apiroot}stats/${sport}/teams/${helpers.getSPAuth()}`,
+          (err, response, body) => {
+            let parsedBody = JSON.parse(body)
+            res.status(200).send(parsedBody)
+          }
+        )
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    } else {
+      res.status(401).send('Required field missing')
+    }
+  },
+
+  team: async (req, res) => {
+    if(req.params.teamId && req.params.league) {
+      try {
+        let sport = helpers.getSport(req.params.league)
+        let team = req.params.teamId
+        request(`${apiroot}stats/${sport}/participants/teams/${team}${helpers.getSPAuth()}`,
           (err, response, body) => {
             let parsedBody = JSON.parse(body)
             res.status(200).send(parsedBody)
@@ -23,11 +42,12 @@ const StatsPerformController = {
   events: async (req, res) => {
     if(req.params.league) {
       try {
-        let query = helpers.getQuery(req.params.league)
-        request(`http://api.stats.com/v1/stats/${query}/events/${helpers.getSPAuth()}`,
+        let sport = helpers.getSport(req.params.league)
+        console.log(`${apiroot}stats/${sport}/events/${helpers.getSPAuth()}`)
+        request(`${apiroot}stats/${sport}/events/${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
-            res.json(parsedBody)
+            res.status(200).send(parsedBody)
           }
         )
       } catch (err) {
@@ -41,11 +61,11 @@ const StatsPerformController = {
   venues: async (req, res) => {
     if(req.params.league) {
       try {
-        let query = helpers.getQuery(req.params.league)
-        request(`http://api.stats.com/v1/decode/${query}/venues${helpers.getSPAuth()}`,
+        let sport = helpers.getSport(req.params.league)
+        request(`http://api.stats.com/v1/decode/${sport}/venues${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
-            res.json(parsedBody)
+            res.status(200).send(parsedBody)
           }
         )
       } catch (err) {
@@ -59,11 +79,11 @@ const StatsPerformController = {
   venue: async (req, res) => {
     if(req.params.venueId) {
       try {
-        let query = helpers.getQuery(req.params.league)
-        request(`http://api.stats.com/v1/decode/${query}/venues/${req.params.venueId}${helpers.getSPAuth()}`,
+        let sport = helpers.getSport(req.params.league)
+        request(`http://api.stats.com/v1/decode/${sport}/venues/${req.params.venueId}${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
-            res.json(parsedBody)
+            res.status(200).send(parsedBody)
           }
         )
       } catch (err) {
@@ -92,6 +112,8 @@ module.exports.controller = (app) => {
   // teams
   app.get('/v1/sp/teams/:league', StatsPerformController.teams)
   app.get('/v1/sp/teams/', StatsPerformController.teams)
+
+  app.get('/v1/sp/team/:league/:teamId', StatsPerformController.team)
   
   //leagues
   app.get('/v1/sp/events/:league', StatsPerformController.events)
