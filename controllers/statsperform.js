@@ -2,6 +2,7 @@ const helpers = require('../utils/helpers')
 const request = require('request')
 const apiroot = process.env.SP_API_ROOT
 const StatsPerformController = {
+  
   teams: async (req, res) => {
     if(req.params.league) {
       try {
