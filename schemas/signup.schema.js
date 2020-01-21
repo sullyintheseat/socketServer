@@ -56,7 +56,7 @@ const SignupSchema = Schema({
 })
 
 
-class Survey {
+class Signup {
   
   static async createItem (appData) {
     try {

@@ -1,5 +1,6 @@
 const Input = require('../schemas/survey.schema')
 const Analytic = require('../schemas/analytic.schema')
+const Signup = require ('../schemas/signup.schema')
 const moment = require('moment')
 const crypto = require('crypto')
 const request = require('request')
@@ -75,6 +76,12 @@ const InputController = {
 
   signUp: async (req, res) => {
     try{
+      let data = req.body
+      if(data) {
+        await Signup.createItem(data)
+      } else {
+        res.status(401).send('No data sent')
+      }
       res.status(200).send('ok')
     } catch (err) {
       res.status(500).send(err)
