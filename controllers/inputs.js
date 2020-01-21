@@ -71,6 +71,14 @@ const InputController = {
     } catch (err) {
       res.status(500).send(err)
     }
+  },
+
+  signUp: async (req, res) => {
+    try{
+      res.status(200).semnd('ok')
+    } catch (err) {
+      res.status(500).send(err)
+    }
   }
 }
 
@@ -81,4 +89,6 @@ module.exports.controller = (app) => {
   app.get('/v1/metrics', InputController.getMetrics)
   app.get('/v1/survey/status/:value', InputController.surveyActive)
   app.get('/v1/survey/status/', InputController.surveyActive)
+
+  app.post('/v1/signup', InputController.signUp)
 }
