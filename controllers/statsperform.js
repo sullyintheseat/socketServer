@@ -104,13 +104,25 @@ const StatsPerformController = {
     }
   },
 
-  gmaeStats: async (req, res) => {
-    try {
-
-    } catch (err) {
-      res.status(500).send(err)
+  gameStats: async (req, res) => {
+    let eventId = req.params.eventId;
+    let sport = helpers.getSport(req.params.league)
+    if(eventId && sport){
+      try {    
+        request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`,
+            function (err, response, body) {
+              // parse the body as JSON
+              console.log(err)
+              var parsedBody = JSON.parse(body);
+              res.json(parsedBody);
+            });
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    } else {
+      res.status(401).send('Required field missing')
     }
-  }
+	}
 }
 
 module.exports.Controller = StatsPerformController;
@@ -127,5 +139,6 @@ module.exports.controller = (app) => {
   
   //leagues
   app.get('/v1/sp/events/:league/:teamId/:season', StatsPerformController.events)
-  // app.get('/v1/sp/events', StatsPerformController.events)
+  
+  app.get('/v1/sp/stats/:league/:eventId', StatsPerformController.gameStats)
 }
