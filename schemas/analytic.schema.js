@@ -11,6 +11,10 @@ const AnalyticSchema = Schema({
     type: String,
     default: null
   },
+  deviceId: {
+    type: String,
+    default: null
+  },
   navigation: {
     to: {
       type: String,

@@ -109,6 +109,7 @@ const StatsPerformController = {
     let sport = helpers.getSport(req.params.league)
     if(eventId && sport){
       try {    
+        console.log(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`)
         request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`,
             function (err, response, body) {
               // parse the body as JSON

@@ -58,7 +58,7 @@ const InputController = {
     try {
       let data = req.body;
       await Analytic.addAnalytic(data);
-      res.status(200).send('ok')
+      res.status(200).send(data._id)
     } catch (err) {
       res.status(500).send(err)
     }
@@ -93,6 +93,8 @@ module.exports.Controller = InputController;
 module.exports.controller = (app) => {
   app.post('/v1/survey', InputController.addEntry)
   app.post('/v1/metrics', InputController.metrics)
+
+
   app.get('/v1/metrics', InputController.getMetrics)
   app.get('/v1/survey/status/:value', InputController.surveyActive)
   app.get('/v1/survey/status/', InputController.surveyActive)
