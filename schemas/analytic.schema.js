@@ -11,7 +11,7 @@ const AnalyticSchema = Schema({
     type: String,
     default: null
   },
-  deviceId: {
+  metricId: {
     type: String,
     default: null
   },
