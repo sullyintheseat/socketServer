@@ -10,7 +10,11 @@ const StatsPerformController = {
         request(`${apiroot}stats/${sport}/teams/${helpers.getSPAuth()}`,
           (err, response, body) => {
             let parsedBody = JSON.parse(body)
-            res.status(200).send(parsedBody)
+            try {
+              res.status(200).send(parsedBody);
+            } catch (e) {
+              res.status(401).send('Unauithorized')
+            }
           }
         )
       } catch (err) {
@@ -30,7 +34,11 @@ const StatsPerformController = {
         request(`${apiroot}stats/${sport}/participants/teams/${team}${helpers.getSPAuth()}`,
           (err, response, body) => {
             let parsedBody = JSON.parse(body)
-            res.status(200).send(parsedBody)
+            try {
+              res.status(200).send(parsedBody);
+            } catch (e) {
+              res.status(401).send('Unauithorized')
+            }
           }
         )
       } catch (err) {
@@ -57,7 +65,11 @@ const StatsPerformController = {
         request(`${apiroot}stats/${sport}/scores/teams/${team}${helpers.getSPAuth()}&${season}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
-            res.status(200).send(parsedBody)
+            try {
+              res.status(200).send(parsedBody);
+            } catch (e) {
+              res.status(401).send('Unauithorized')
+            }
           }
         )
       } catch (err) {
@@ -75,7 +87,11 @@ const StatsPerformController = {
         request(`http://api.stats.com/v1/decode/${sport}/venues${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
-            res.status(200).send(parsedBody)
+            try {
+              res.status(200).send(parsedBody);
+            } catch (e) {
+              res.status(401).send('Unauithorized')
+            }
           }
         )
       } catch (err) {
@@ -93,7 +109,11 @@ const StatsPerformController = {
         request(`http://api.stats.com/v1/decode/${sport}/venues/${req.params.venueId}${helpers.getSPAuth()}`,
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
-            res.status(200).send(parsedBody)
+            try {
+              res.status(200).send(parsedBody);
+            } catch (e) {
+              res.status(401).send('Unauithorized')
+            }
           }
         )
       } catch (err) {
@@ -113,9 +133,13 @@ const StatsPerformController = {
         request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`,
             function (err, response, body) {
               // parse the body as JSON
-              console.log(err)
+              console.log(response, err)
               var parsedBody = JSON.parse(body);
-              res.json(parsedBody);
+              try {
+                res.status(200).send(parsedBody);
+              } catch (e) {
+                res.status(401).send('Unauithorized')
+              }
             });
       } catch (err) {
         res.status(500).send(err)
