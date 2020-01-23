@@ -17,7 +17,7 @@ const helpers = {
       case 'cbk':
         query = 'basketball/cbk'
         break
-      case 'cbk':
+      case 'cwbk':
         query = 'basketball/wcbk'
         break
       case 'cfb':
