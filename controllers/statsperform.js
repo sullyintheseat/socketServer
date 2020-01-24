@@ -13,7 +13,7 @@ const StatsPerformController = {
             try {
               res.status(200).send(parsedBody);
             } catch (e) {
-              res.status(401).send('Unauithorized')
+              res.status(403).send('Unauithorized')
             }
           }
         )
@@ -37,7 +37,7 @@ const StatsPerformController = {
             try {
               res.status(200).send(parsedBody);
             } catch (e) {
-              res.status(401).send('Unauithorized')
+              res.status(403).send('Unauithorized')
             }
           }
         )
@@ -68,7 +68,7 @@ const StatsPerformController = {
             try {
               res.status(200).send(parsedBody);
             } catch (e) {
-              res.status(401).send('Unauithorized')
+              res.status(403).send('Unauithorized')
             }
           }
         )
@@ -90,7 +90,7 @@ const StatsPerformController = {
             try {
               res.status(200).send(parsedBody);
             } catch (e) {
-              res.status(401).send('Unauithorized')
+              res.status(403).send('Unauithorized')
             }
           }
         )
@@ -112,7 +112,7 @@ const StatsPerformController = {
             try {
               res.status(200).send(parsedBody);
             } catch (e) {
-              res.status(401).send('Unauithorized')
+              res.status(403).send('Unauithorized')
             }
           }
         )
@@ -138,7 +138,7 @@ const StatsPerformController = {
               try {
                 res.status(200).send(parsedBody);
               } catch (e) {
-                res.status(401).send('Unauithorized')
+                res.status(403).send('Unauithorized')
               }
             });
       } catch (err) {
