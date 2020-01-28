@@ -176,7 +176,22 @@ const StatsPerformController = {
     try {
       let teamId = Number(req.params.teamId)
       let answer = await spevents.getItemBy(req.params.teamId, helpers.Today())
-      res.status(200).send({eventId: answer.eventId, teamId})
+      let sport = helpers.getSport(req.params.league)
+
+      if(!Boolean(answer.eventId)) {
+        res.status(200).send({eventId: answer.eventId, teamId})
+      } else {
+        request(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}&box=true`,
+        function (err, response, body) {
+          // parse the body as JSON
+          var parsedBody = JSON.parse(body)
+          try {
+            res.status(200).send(parsedBody)
+          } catch (e) {
+            res.status(403).send('Unauthorized')
+          }
+        })
+      }
     } catch (err) {
       res.status(500).send(err)
     }
@@ -200,5 +215,5 @@ module.exports.controller = (app) => {
   app.get('/v1/sp/gameday', StatsPerformController.gameDay)
   //events
   app.post('/v1/sp/events', StatsPerformController.addEvent)
-  app.get('/v1/sp/event/:teamId', StatsPerformController.getEvent)
+  app.get('/v1/sp/event/:league/:teamId', StatsPerformController.getEvent)
 }
