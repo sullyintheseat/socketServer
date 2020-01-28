@@ -28,6 +28,10 @@ const helpers = {
         break
     }
     return query
+  }, 
+
+  Today() {
+    return moment().format('YYYY-MM-DD')
   }
 }
 

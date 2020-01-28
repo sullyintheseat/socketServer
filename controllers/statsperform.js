@@ -1,6 +1,8 @@
 const helpers = require('../utils/helpers')
 const request = require('request')
 const apiroot = process.env.SP_API_ROOT
+const spevents = require('../schemas/stats.schema')
+
 const StatsPerformController = {
 
   teams: async (req, res) => {
@@ -11,7 +13,7 @@ const StatsPerformController = {
           (err, response, body) => {
             let parsedBody = JSON.parse(body)
             try {
-              res.status(200).send(parsedBody);
+              res.status(200).send(parsedBody)
             } catch (e) {
               res.status(403).send('Unauithorized')
             }
@@ -35,7 +37,7 @@ const StatsPerformController = {
           (err, response, body) => {
             let parsedBody = JSON.parse(body)
             try {
-              res.status(200).send(parsedBody);
+              res.status(200).send(parsedBody)
             } catch (e) {
               res.status(403).send('Unauithorized')
             }
@@ -66,7 +68,7 @@ const StatsPerformController = {
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
             try {
-              res.status(200).send(parsedBody);
+              res.status(200).send(parsedBody)
             } catch (e) {
               res.status(403).send('Unauithorized')
             }
@@ -88,7 +90,7 @@ const StatsPerformController = {
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
             try {
-              res.status(200).send(parsedBody);
+              res.status(200).send(parsedBody)
             } catch (e) {
               res.status(403).send('Unauithorized')
             }
@@ -110,7 +112,7 @@ const StatsPerformController = {
           (err, response, body) => {
             var parsedBody = JSON.parse(body)
             try {
-              res.status(200).send(parsedBody);
+              res.status(200).send(parsedBody)
             } catch (e) {
               res.status(403).send('Unauithorized')
             }
@@ -129,16 +131,16 @@ const StatsPerformController = {
     let sport = helpers.getSport(req.params.league)
     if(eventId && sport){
       try {    
+        console.log('dev')
         console.log(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`)
         request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`,
             function (err, response, body) {
               // parse the body as JSON
-              console.log(response, err)
-              var parsedBody = JSON.parse(body);
+              var parsedBody = JSON.parse(body)
               try {
-                res.status(200).send(parsedBody);
+                res.status(200).send(parsedBody)
               } catch (e) {
-                res.status(403).send('Unauithorized')
+                res.status(403).send('Unauthorized')
               }
             });
       } catch (err) {
@@ -147,7 +149,38 @@ const StatsPerformController = {
     } else {
       res.status(401).send('Required field missing')
     }
-	}
+  },
+  
+  gameDay: async (req, res) => {
+    try {
+      res.status(200).send(helpers.isToday())
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  addEvent: async (req, res) => {
+    try {
+      let resp = await spevents.createItem(req.body)
+      if(resp) {
+        res.status(200).send(resp)
+      } else {
+        res.status(400).send('Failure')
+      }
+    } catch (err) {
+      res.status(500).send('Failure')
+    }
+  }, 
+
+  getEvent: async (req, res) => {
+    try {
+      let teamId = Number(req.params.teamId)
+      let answer = await spevents.getItemBy(req.params.teamId, helpers.Today())
+      res.status(200).send({eventId: answer.eventId, teamId})
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  }
 }
 
 module.exports.Controller = StatsPerformController;
@@ -159,11 +192,13 @@ module.exports.controller = (app) => {
   // teams
   app.get('/v1/sp/teams/:league', StatsPerformController.teams)
   app.get('/v1/sp/teams/', StatsPerformController.teams)
-
   app.get('/v1/sp/team/:league/:teamId', StatsPerformController.team)
-  
   //leagues
   app.get('/v1/sp/events/:league/:teamId/:season', StatsPerformController.events)
-  
   app.get('/v1/sp/stats/:league/:eventId', StatsPerformController.gameStats)
+
+  app.get('/v1/sp/gameday', StatsPerformController.gameDay)
+  //events
+  app.post('/v1/sp/events', StatsPerformController.addEvent)
+  app.get('/v1/sp/event/:teamId', StatsPerformController.getEvent)
 }
