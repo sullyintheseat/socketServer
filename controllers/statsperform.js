@@ -65,12 +65,12 @@ const StatsPerformController = {
         console.log(`${apiroot}stats/${sport}/scores/teams/${team}${helpers.getSPAuth()}&${season}`)
 
         request(`${apiroot}stats/${sport}/scores/teams/${team}${helpers.getSPAuth()}&${season}`,
-          (err, response, body) => {
-            var parsedBody = JSON.parse(body)
+          (err, response, body) => {  
             try {
+              var parsedBody = JSON.parse(body)
               res.status(200).send(parsedBody)
             } catch (e) {
-              res.status(403).send('Unauithorized')
+              res.status(403).send('Unauthorized')
             }
           }
         )
