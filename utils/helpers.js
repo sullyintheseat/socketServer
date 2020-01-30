@@ -31,7 +31,7 @@ const helpers = {
   }, 
 
   Today() {
-    return moment().subtract(process.env.UTC_OFFSET).format('YYYY-MM-DD')
+    return moment().add(process.env.UTC_OFFSET).format('YYYY-MM-DD')
   }
 }
 
