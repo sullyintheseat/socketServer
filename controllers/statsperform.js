@@ -131,12 +131,13 @@ const StatsPerformController = {
     let sport = helpers.getSport(req.params.league) 
     if(eventId && sport){
       try {    
-        let stats = helpers.Options(sport)
+        let stats = helpers.Options(req.params.league)
+        console.log(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}${stats}`)
         request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}${stats}`,
             function (err, response, body) {
               // parse the body as JSON
-              var parsedBody = JSON.parse(body)
               try {
+                var parsedBody = JSON.parse(body)
                 res.status(200).send(parsedBody)
               } catch (e) {
                 res.status(403).send('Unauthorized')
