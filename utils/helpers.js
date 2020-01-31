@@ -30,6 +30,27 @@ const helpers = {
     return query
   }, 
 
+  Options (val) {
+    let opts
+
+    switch (val) {
+      case 'cbk':
+        opts = 'basketball/cbk'
+        break
+      case 'wcbk':
+        opts = 'basketball/wcbk'
+        break
+      case 'cfb':
+        opts = 'football/cfb'
+        break
+      default:
+        opts = 'basketball/cbk'
+        break
+    }
+
+    return opts
+  },
+
   Today() {
     let tdate = moment().subtract('hours', process.env.UTC_OFFSET).format('YYYY-MM-DD')
     console.log(tdate)

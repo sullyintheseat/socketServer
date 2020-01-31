@@ -45,6 +45,10 @@ const SignupSchema = Schema({
   zip: {
     type: String,
     default: null
+  },
+  eventId: {
+    type: String,
+    default: null
   }
 },
 {
