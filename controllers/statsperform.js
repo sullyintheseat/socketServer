@@ -128,12 +128,11 @@ const StatsPerformController = {
 
   gameStats: async (req, res) => {
     let eventId = req.params.eventId;
-    let sport = helpers.getSport(req.params.league)
+    let sport = helpers.getSport(req.params.league) 
     if(eventId && sport){
       try {    
-        console.log('dev')
-        console.log(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`)
-        request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}&box=true`,
+        let stats = helpers.Options(sport)
+        request(`${apiroot}stats/${sport}/events/${eventId}${helpers.getSPAuth()}${stats}`,
             function (err, response, body) {
               // parse the body as JSON
               var parsedBody = JSON.parse(body)

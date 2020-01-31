@@ -35,16 +35,16 @@ const helpers = {
 
     switch (val) {
       case 'cbk':
-        opts = 'basketball/cbk'
+        opts = '&box=true&pbp=true&insights=true'
         break
       case 'wcbk':
-        opts = 'basketball/wcbk'
+        opts = '&box=true&linescore=true&pbp=true&livecoverage=true'
         break
       case 'cfb':
-        opts = 'football/cfb'
+        opts = '&box=true&pbp=true&insights=true'
         break
       default:
-        opts = 'basketball/cbk'
+        opts = '&box=true&pbp=true&insights=true'
         break
     }
 
