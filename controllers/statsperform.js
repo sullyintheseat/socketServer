@@ -174,6 +174,7 @@ const StatsPerformController = {
 
   getEvent: async (req, res) => {
     try {
+      let stats = helpers.Options(req.params.league)
       let teamId = Number(req.params.teamId)
       let answer = await spevents.getItemBy(req.params.teamId, helpers.Today())
       let sport = helpers.getSport(req.params.league)
@@ -181,7 +182,8 @@ const StatsPerformController = {
       if(!Boolean(answer.eventId)) {
         res.status(200).send({eventId: answer.eventId, teamId})
       } else {
-        request(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}&box=true`,
+        // request(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}&box=true`,
+        request(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}${stats}`,
         function (err, response, body) {
           // parse the body as JSON
           var parsedBody = JSON.parse(body)
@@ -215,5 +217,6 @@ module.exports.controller = (app) => {
   app.get('/v1/sp/gameday', StatsPerformController.gameDay)
   //events
   app.post('/v1/sp/events', StatsPerformController.addEvent)
+
   app.get('/v1/sp/event/:league/:teamId', StatsPerformController.getEvent)
 }
