@@ -79,9 +79,9 @@ class Signup {
     }
   }
 
-  static async getItems () {
+  static async getItems (query) {
     try {
-      return await this.find().exec()
+      return await this.find(query).exec()
     } catch(error) {
       return false
     }

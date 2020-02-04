@@ -61,7 +61,7 @@ class Analytic {
 
   static async getMetricsBy (query) {
     try {
-      let result = await this.find({query})
+      let result = await this.find(query)
         .exec()
       return result
     } catch (error) {

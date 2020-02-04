@@ -183,6 +183,7 @@ const StatsPerformController = {
         res.status(200).send({eventId: answer.eventId, teamId})
       } else {
         // request(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}&box=true`,
+        console.log(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}${stats}`)
         request(`${apiroot}stats/${sport}/events/${answer.eventId}${helpers.getSPAuth()}${stats}`,
         function (err, response, body) {
           // parse the body as JSON

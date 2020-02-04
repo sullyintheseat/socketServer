@@ -86,7 +86,43 @@ const InputController = {
     } catch (err) {
       res.status(500).send(err)
     }
-  }
+  },
+
+  getSignup: async (req, res) => {
+    try{
+      let data = await Signup.getItems({eventId: '1605'})
+      /*
+      let ans = ''
+      for(let i = 0; i < data.length; i++) {
+        ans += `${data[i].email}, burger-giveaway, ${data[i].createdAt}, ${data[i].tagId}<br/>`
+      }
+      */
+      res.status(200).send(data)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getMetricsBy: async (req, res) => {
+    if(req.params.appId) {
+      try {
+        let data = await Analytic.getMetricsBy({appId: req.params.appId})
+
+        let response = ''
+
+        for(let i = 0; i < data.length; i++) {
+          var t = data[i]
+          response += `${t.appId}, ${t.navigation.itemClicked},${t.metricId},${t.createdAt}<br/>`
+        }
+    
+        res.status(200).send(response)
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    } else {
+      res.status(401).send('Required Parameter Missing')
+    }
+  },
 }
 
 module.exports.Controller = InputController;
@@ -94,10 +130,11 @@ module.exports.controller = (app) => {
   app.post('/v1/survey', InputController.addEntry)
   app.post('/v1/metrics', InputController.metrics)
 
-
+  app.get('/v1/metrics/:appId', InputController.getMetricsBy)
   app.get('/v1/metrics', InputController.getMetrics)
   app.get('/v1/survey/status/:value', InputController.surveyActive)
   app.get('/v1/survey/status/', InputController.surveyActive)
 
   app.post('/v1/signup', InputController.signUp)
+  app.get('/v1/signup', InputController.getSignup)
 }
