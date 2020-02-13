@@ -67,8 +67,17 @@ const InputController = {
   getMetrics: async (req, res) => {
     try {
       let data = await Analytic.getAllData()
+      
+      let response = ''
+
+      for(let i = 0; i < data.length; i++) {
+        var t = data[i]
+        response += `${t.appId}, ${t.navigation.itemClicked},${t.metricId},${t.createdAt}<br/>`
+      }
   
-      res.status(200).send(data)
+      res.status(200).send(response)
+
+  
     } catch (err) {
       res.status(500).send(err)
     }
@@ -91,12 +100,12 @@ const InputController = {
   getSignup: async (req, res) => {
     try{
       let data = await Signup.getItems({eventId: '1605'})
-      /*
+      
       let ans = ''
       for(let i = 0; i < data.length; i++) {
         ans += `${data[i].email}, burger-giveaway, ${data[i].createdAt}, ${data[i].tagId}<br/>`
       }
-      */
+    
       res.status(200).send(data)
     } catch (err) {
       res.status(500).send(err)
@@ -106,7 +115,10 @@ const InputController = {
   getMetricsBy: async (req, res) => {
     if(req.params.appId) {
       try {
-        let data = await Analytic.getMetricsBy({appId: req.params.appId})
+        //{appId:'fbLNcQcG', createdAt: {$gte: ISODate('2020-02-07 00:00:000Z')}}
+        let criteria = new Date('2020-02-07 00:00:000Z')
+        console.log({appId: req.params.appId, createdAt: { $gte: `ISODate(${criteria.toISOString()})`}})
+        let data = await Analytic.getMetricsBy({appId: req.params.appId })
 
         let response = ''
 

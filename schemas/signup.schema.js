@@ -49,6 +49,10 @@ const SignupSchema = Schema({
   eventId: {
     type: String,
     default: null
+  },
+  formName: {
+    type: String,
+    default: null
   }
 },
 {
@@ -64,8 +68,20 @@ class Signup {
   
   static async createItem (appData) {
     try {
-      let result = await this.create(appData)
-      return result
+      let valid =  false
+      for (var item in appData) {
+        if(item !== 'eventId' && item !== 'appId' && item !== 'tagId') {
+          if(appData[item]) {
+            valid = true
+          }
+        }
+      }
+      if(valid) {
+        let result = await this.create(appData)
+        return result
+      } else {
+        return false
+      }
     } catch(error) {
       return false
     }

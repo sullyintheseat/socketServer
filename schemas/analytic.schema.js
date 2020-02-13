@@ -61,7 +61,8 @@ class Analytic {
 
   static async getMetricsBy (query) {
     try {
-      let result = await this.find(query)
+      console.log(query)
+      let result = await this.find(query).sort({createdAt:-1 })
         .exec()
       return result
     } catch (error) {

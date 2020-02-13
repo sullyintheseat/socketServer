@@ -38,7 +38,7 @@ const helpers = {
         opts = '&box=true&pbp=true&insights=true'
         break
       case 'wcbk':
-        opts = '&box=true&linescore=true&pbp=true&livecoverage=true'
+        opts = '&box=true&=true&pbp=true&livecoverage=true'
         break
       case 'cfb':
         opts = '&box=true&pbp=true&insights=true'
