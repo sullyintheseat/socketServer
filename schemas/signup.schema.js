@@ -50,6 +50,10 @@ const SignupSchema = Schema({
     type: String,
     default: null
   },
+  moduleId: {
+    type: String,
+    default: null
+  },
   formName: {
     type: String,
     default: null
