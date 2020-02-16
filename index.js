@@ -70,6 +70,7 @@ require('./controllers/application').controller(app);
 require('./controllers/stats').controller(app);
 require('./controllers/inputs').controller(app);
 require('./controllers/statsperform').controller(app);
+require('./controllers/content.manager').controller(app);
 
 http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)
