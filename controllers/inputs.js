@@ -88,11 +88,7 @@ const InputController = {
       let data = req.body
       let answer
       if(data) {
-        console.log(data)
         answer = await Signup.createItem(data)
-
-        console.log(answer.error)
-      
         if(!answer.error){
           res.status(200).send({status: 'success', message: 'Successfully signed up'})
         } else {
