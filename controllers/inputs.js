@@ -91,7 +91,12 @@ const InputController = {
       } else {
         res.status(401).send('No data sent')
       }
-      res.status(200).send('ok')
+      if(!data.error){
+        res.status(200).send('ok')
+      } else {
+        res.status(404).send('user exists')
+      }
+      
     } catch (err) {
       res.status(500).send(err)
     }
