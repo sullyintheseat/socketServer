@@ -94,9 +94,9 @@ const InputController = {
         console.log(answer.error)
       
         if(!answer.error){
-          res.status(200).send('ok')
+          res.status(200).send({status: 'success', message: 'Successfully signed up'})
         } else {
-          res.status(404).send('user exists')
+          res.status(404).send({status: 'error', message: 'user exists'})
         }
       } else {
         res.status(401).send('No data sent')
