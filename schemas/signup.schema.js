@@ -82,7 +82,8 @@ class Signup {
       }
       if(valid) {
         let exists = await this.find(appData)
-        if(exists){
+        
+        if(exists.length > 0){
           return ({error: 'Already Entered'})
         } else {
           let result = await this.create(appData)

@@ -86,16 +86,22 @@ const InputController = {
   signUp: async (req, res) => {
     try{
       let data = req.body
+      let answer
       if(data) {
-        await Signup.createItem(data)
+        console.log(data)
+        answer = await Signup.createItem(data)
+
+        console.log(answer.error)
+      
+        if(!answer.error){
+          res.status(200).send('ok')
+        } else {
+          res.status(404).send('user exists')
+        }
       } else {
         res.status(401).send('No data sent')
       }
-      if(!data.error){
-        res.status(200).send('ok')
-      } else {
-        res.status(404).send('user exists')
-      }
+      
       
     } catch (err) {
       res.status(500).send(err)
