@@ -81,8 +81,14 @@ class Signup {
         }
       }
       if(valid) {
-        let result = await this.create(appData)
-        return result
+        let exists = await this.find(appData)
+        if(exists){
+          return ({error: 'Already Entered'})
+        } else {
+          let result = await this.create(appData)
+          return result
+        }
+        
       } else {
         return false
       }
