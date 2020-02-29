@@ -110,6 +110,7 @@ class Signup {
     try {
       return await this.find(query).exec()
     } catch(error) {
+      console.log(error)
       return false
     }
   }

@@ -26,7 +26,11 @@ const ContentController = {
     if(configId) {
       try {
         let data = await TargetItem.getItemsBy({targetId: configId})
-        res.status(200).send(data[0])
+        if(!data.length) {
+          res.status(404).send('Not Found')
+        } else {
+          res.status(200).send(data[0])
+        }
       } catch (err) {
         res.status(500).send(err)
       }

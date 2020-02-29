@@ -126,20 +126,35 @@ const InputController = {
         let criteria = new Date('2020-02-07 00:00:000Z')
         console.log({appId: req.params.appId, createdAt: { $gte: `ISODate(${criteria.toISOString()})`}})
         let data = await Analytic.getMetricsBy({appId: req.params.appId })
-
         let response = ''
-
         for(let i = 0; i < data.length; i++) {
           var t = data[i]
           response += `${t.appId}, ${t.navigation.itemClicked},${t.metricId},${t.createdAt}<br/>`
         }
-    
         res.status(200).send(response)
       } catch (err) {
         res.status(500).send(err)
       }
     } else {
       res.status(401).send('Required Parameter Missing')
+    }
+  },
+
+  //createdAt: {$gte: ISODate('2020-02-22` 00:00:000Z') ,$lte: ISODate('2020-02-25 00:00:000Z')}
+
+  getSignups: async (req, res) => {
+    try{
+    
+      let data = await Signup.getItems({formName:'UCONN_MOES'})
+      
+      let ans = ''
+      for(let i = 0; i < data.length; i++) {
+        ans += `${data[i].firstName},${data[i].lastName},${data[i].email}, ${data[i].formName}, ${data[i].createdAt}, ${data[i].tagId}<br/>`
+      }
+    
+      res.status(200).send(ans)
+    } catch (err) {
+      res.status(500).send(err)
     }
   },
 }
@@ -156,4 +171,5 @@ module.exports.controller = (app) => {
 
   app.post('/v1/signup', InputController.signUp)
   app.get('/v1/signup', InputController.getSignup)
+  app.get('/v1/contest', InputController.getSignups)
 }

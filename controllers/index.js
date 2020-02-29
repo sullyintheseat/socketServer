@@ -12,6 +12,10 @@ const SocketController = {
     io.emit('updateApp', msg)
   },
 
+  throwGame: (io, msg) => {
+    io.emit('throwGame', msg)
+  },
+
   addUser: (io, msg, socketId) => {
     io.username = msg;
     io.to(socketId).emit('userSigned', {
@@ -25,7 +29,7 @@ const SocketController = {
 
   removeUser: (user) => {
     // console.log(SocketController.users)
-  }
+  },
 }
 
 module.exports = SocketController;

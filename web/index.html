@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js" type="text/javascript"></script>    
     <script src="/cdn/js/libs/jquery-2.2.3.min.js" type="text/javascript"></script>
-    <link href="/cdn/style/open-iconic-bootstrap.css" rel="stylesheet">
+
 
     <link type="text/css" rel="stylesheet" href="/cdn/style/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="/cdn/style/custom.css"/>
@@ -58,6 +58,10 @@
           <p><a href="#" onclick="send(1)">Send Ad Hats</a></p>
           <p><a href="#" onclick="send(2)">Send Loyalty Offer</a></p>
           <br/><br/>
+          <h3>Throw Promo</h3>
+          <p><a href="#" onclick="throwPromo('https://admin.cataboom.com/demo/wisconsin-fleet-farm-scratch-and-win?winlevel=1')">Throw Promo</a></p>
+          <h3>Game Test</h3>
+          <p><a href="#" onclick="sendGame('https://admin.cataboom.com/demo/wisconsin-fleet-farm-scratch-and-win?winlevel=1')">Send Game</a></p>
           <h3>Clear all</h3>
           <p><a href="#" onclick="send(null)">Clear Ad</a></p>
         </div>
@@ -94,21 +98,27 @@
         if(id != null){
           console.log(ads[id])
           let myval = `{${ads[id]}}`
-          socket.emit('sendToAll',myval);
-        
+          socket.emit('sendToAll',myval); 
           return false;
         } else {
           socket.emit('sendToAll', '');
-        
           return false;
         }
       }
-
+      function sendGame(val) {
+        alert(val)
+        let socket = io();
+        socket.emit('throwGame', val)
+      }
       function sendTo (user, msg) {
         let socket = io()
         msg = `{${prizes[msg]}}`
         socket.emit('target', user, msg)
         return false
+      }
+      function throwPromo(val) {
+        let socket = io();
+        socket.emit('throwPromo', val)            
       }
     </script>
   </body>

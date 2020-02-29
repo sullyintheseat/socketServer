@@ -50,15 +50,22 @@ app.all('*', function(req, res, next){ req.io	= io; next();});
 app.set('port', process.env.PORT || aport);
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.text({ type: 'text/html' }))
+
+app.use((req, res, next) => {
+  if (req.originalUrl && req.originalUrl.split("/").pop() === 'favicon.ico') {
+    return res.sendStatus(204)
+  } 
+  return next()
+})
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/web/index.html')
 })
 
 app.use('/', express.static(path.join(__dirname, 'web')))
-
+app.use('/cdn', express.static(path.join(__dirname, 'web')))
 
 let socketController = require('./controllers/index.js')
 
@@ -80,6 +87,7 @@ io.on('connection', function(socket) {
   //console.log(socket.id + ' connected')
 
   socket.on('disconnect', () => {
+    console.log('disco')
     socketController.userDisconnected(this)
   })
 
@@ -95,25 +103,39 @@ io.on('connection', function(socket) {
     socketController.sendAll(this, msg)
   })
 
+  socket.on('throwGame', (msg) => {
+    socketController.throwGame(this, msg, socket.id)
+  })
+
   socket.on('pushDestination', (msg) =>{
   })
 
+  socket.on('throwPromo', (msg) => {
+    if(msg.length < 1 ){
+      msg = null;
+    }
+    socketController.sendAll(this, msg)
+  })
+
   socket.on('target', (user, msg) => {
-    console.log(msg, user)
-    // console.log(socketController.users)
+    //console.log(socketController.users) 
     for(let i =0; i < socketController.users.length; i++) {
       if(socketController.users[i].username === user){
-        this.to(socketController.users[i].socketId).emit('testCall', msg);
+        console.log(i)
+        this.to(socketController.users[i].socketId).emit('testCall', msg)
       }
     }
   })
 
   socket.on('addUser', (msg) => {
-    // console.log(msg + ' add user')
-    // console.log(io.sockets.adapter.rooms)
+    console.log(msg)
     socket.join('stadium')
     socketController.addUser(this, msg, socket.id)
     this.to(socket.id).emit('userJoined',  {data: 'true'})
+  })
+
+  socket.on('addUserTo', (msg) => {
+    console.log(msg.name + ' ' + msg.state)
   })
 
   socket.on('removeUser', (name) => {
