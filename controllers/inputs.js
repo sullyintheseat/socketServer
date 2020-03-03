@@ -1,6 +1,7 @@
 const Input = require('../schemas/survey.schema')
 const Analytic = require('../schemas/analytic.schema')
 const Signup = require ('../schemas/signup.schema')
+const Votes = require('../schemas/votes.schema')
 const moment = require('moment')
 const crypto = require('crypto')
 const request = require('request')
@@ -144,7 +145,6 @@ const InputController = {
 
   getSignups: async (req, res) => {
     try{
-    
       let data = await Signup.getItems({formName:'UCONN_MOES'})
       
       let ans = ''
@@ -157,6 +157,25 @@ const InputController = {
       res.status(500).send(err)
     }
   },
+  
+  castVote: async (req, res) => {
+    try {
+      let data = req.body
+      let val = await Votes.createItem(data)
+      res.status(200).send(val)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getVotes: async (req, res) => {
+    try {
+
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  }
+
 }
 
 module.exports.Controller = InputController;
@@ -172,4 +191,7 @@ module.exports.controller = (app) => {
   app.post('/v1/signup', InputController.signUp)
   app.get('/v1/signup', InputController.getSignup)
   app.get('/v1/contest', InputController.getSignups)
+
+  app.post('/v1/vote', InputController.castVote)
+  app.get('/v1/votes', InputController.getVotes)
 }
