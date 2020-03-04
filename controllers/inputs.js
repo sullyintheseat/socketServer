@@ -170,7 +170,8 @@ const InputController = {
 
   getVotes: async (req, res) => {
     try {
-
+      let val = await Votes.getAggregatedVotes()
+      res.status(200).send(val)
     } catch (err) {
       res.status(500).send(err)
     }

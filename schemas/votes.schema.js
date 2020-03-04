@@ -69,7 +69,15 @@ class AppVotes {
 
   static async getAggregatedVotes() {
     try {
-
+      let result = await this.aggregate([
+        {
+          $group: {
+             _id: '$candidate',
+             count: { $sum: 1 }
+          }
+        }
+      ])
+      return result
     } catch (error) {
       return error
     }
