@@ -13319,6 +13319,14 @@ const StatsController = {
     } catch (err) {
       res.status(500).send(err)
     }
+  },
+
+  getUfcEvent: async (req, res) => {
+    try {
+      res.status(200).send('ok')
+    } catch (err) {
+      res.status(500).send(err)
+    }
   }
 
 }
@@ -13334,5 +13342,7 @@ module.exports.controller = (app) => {
 
     app.get('', StatsController.getRosterBy)
     app.get('/v1/events', StatsController.events)
+
+    app.get('/v1/ufc/:id', StatsController.getUfcEvent)
   
 }

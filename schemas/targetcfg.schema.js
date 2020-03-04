@@ -38,6 +38,10 @@ const TargetConfigSchema = Schema({
     type: Array,
     default: []
   },
+  menuItems: {
+    type: Array,
+    default: []
+  },
   portalAssets: {
     type: String,
     default: null
