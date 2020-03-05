@@ -6,6 +6,8 @@ const moment = require('moment')
 const crypto = require('crypto')
 const request = require('request')
 
+let activated = false
+
 const InputController = {
   addEntry: async (req, res) => {
     try {
@@ -175,8 +177,24 @@ const InputController = {
     } catch (err) {
       res.status(500).send(err)
     }
-  }
+  },
 
+  getStatus: async (req, res) => {
+    try {
+      res.status(200).send({isActive: activated})
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  setStatus: async (req, res) => {
+    try {
+      activated = req.params.value
+      res.status(200).send('success')
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  }
 }
 
 module.exports.Controller = InputController;
@@ -186,8 +204,9 @@ module.exports.controller = (app) => {
 
   app.get('/v1/metrics/:appId', InputController.getMetricsBy)
   app.get('/v1/metrics', InputController.getMetrics)
-  app.get('/v1/survey/status/:value', InputController.surveyActive)
-  app.get('/v1/survey/status/', InputController.surveyActive)
+
+  app.get('/v1/survey/status/:value', InputController.setStatus)
+  app.get('/v1/survey/status/', InputController.getStatus)
 
   app.post('/v1/signup', InputController.signUp)
   app.get('/v1/signup', InputController.getSignup)
