@@ -190,8 +190,8 @@ const InputController = {
   setStatus: async (req, res) => {
     try {
       activated = req.params.value
-      res.status(200).send('success')
-    } catch (err) {
+      res.status(200).send({isActive: activated})
+    } catch (err) { $
       res.status(500).send(err)
     }
   }
