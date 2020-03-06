@@ -6,7 +6,7 @@ const moment = require('moment')
 const crypto = require('crypto')
 const request = require('request')
 
-let activated = false
+let activated;
 
 const InputController = {
   addEntry: async (req, res) => {

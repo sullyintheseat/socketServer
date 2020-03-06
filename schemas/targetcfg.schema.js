@@ -34,9 +34,9 @@ const TargetConfigSchema = Schema({
   sponsoredBy: [
     {type: SponsorSchema}
   ],
-  modules: {
-    type: Array,
-    default: []
+  appMain: {
+    type: Object,
+    default: {}
   },
   menuItems: {
     type: Array,
