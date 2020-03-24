@@ -39,7 +39,6 @@ const RestaurantSchema = Schema({
   url: {
     type: String,
     default: null,
-    required: true,
   },
   notes: {
     type: String,
