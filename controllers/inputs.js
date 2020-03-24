@@ -6,7 +6,7 @@ const moment = require('moment')
 const crypto = require('crypto')
 const request = require('request')
 
-let activated;
+let activated = false
 
 const InputController = {
   addEntry: async (req, res) => {
@@ -160,6 +160,21 @@ const InputController = {
     }
   },
   
+  getSignupsby: async (req, res) => {
+    try{
+      let data = await Signup.getItems({appId: req.params.appId})
+      
+      let ans = ''
+      for(let i = 0; i < data.length; i++) {
+        ans += `${data[i].firstName},${data[i].lastName},${data[i].email}, ${data[i].formName}, ${data[i].createdAt}, ${data[i].tagId}<br/>`
+      }
+    
+      res.status(200).send(ans)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   castVote: async (req, res) => {
     try {
       let data = req.body
@@ -210,6 +225,7 @@ module.exports.controller = (app) => {
 
   app.post('/v1/signup', InputController.signUp)
   app.get('/v1/signup', InputController.getSignup)
+  app.get('/v1/signups/:appId', InputController.getSignupsby)
   app.get('/v1/contest', InputController.getSignups)
 
   app.post('/v1/vote', InputController.castVote)

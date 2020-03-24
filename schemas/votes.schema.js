@@ -13,6 +13,10 @@ const VoteSchema = Schema({
     type: String,
     required: true
   },
+  targetId: {
+    type: String,
+    required: true
+  },
   candidate: {
     type: String,
     required: true
