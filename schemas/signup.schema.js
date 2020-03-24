@@ -50,6 +50,10 @@ const SignupSchema = Schema({
     type: String,
     default: null
   },
+  purpose: {
+    type: String,
+    default: null
+  },
   moduleId: {
     type: String,
     default: null
