@@ -19,6 +19,18 @@ const CovidManagerController = {
     }
   },
 
+  getList: async (req, res) => {
+    try {
+      let result = await Restaurant.getItems()
+      let response = {
+        vendors: result
+      }
+      res.status(200).send(response)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   deleteRestaurant: async (req, res) => {
     try {
       console.log(req.params.id + ' <-----')
@@ -43,6 +55,7 @@ const CovidManagerController = {
 module.exports.Controller = CovidManagerController;
 module.exports.controller = (app) => {
   app.post('/v1/cov/rest', CovidManagerController.test, CovidManagerController.createRestaurant)
+  app.get('/v1/cov/rest', CovidManagerController.getList)
   app.get('/v1/cov/rests', CovidManagerController.getRestaurants)
   app.delete('/v1/cov/rest/:id', CovidManagerController.test, CovidManagerController.deleteRestaurant)
 }
