@@ -29,8 +29,7 @@ const RestaurantSchema = Schema({
   },
   zip: {
     type: String,
-    default: null,
-    required: true,
+    default: null
   },
   phone: {
     type: String,
