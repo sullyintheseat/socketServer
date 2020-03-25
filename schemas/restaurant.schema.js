@@ -10,7 +10,7 @@ const RestaurantSchema = Schema({
   },
   restId: {
     type: String,
-    default: shortId.generate
+    default: shortId.generate()
   },
   address: {
     type: String,
@@ -92,6 +92,8 @@ class Restaurant {
       return false
     }
   }
+
+  
 
 }
 
