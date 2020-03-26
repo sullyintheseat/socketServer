@@ -59,6 +59,18 @@ const CovidManagerController = {
     }
   },
 
+  getCentersAll: async (req, res) => {
+    try {
+      let result = await Center.getItems()
+      let response = {
+        vendors: result
+      }
+      res.status(200).send(response)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+  
   deleteCenter: async (req, res) => {
     try {
       console.log(req.params.id + ' <-----')
@@ -89,5 +101,6 @@ module.exports.controller = (app) => {
 
   app.post('/v1/cov/center', CovidManagerController.test, CovidManagerController.createCenter)
   app.get('/v1/cov/center', CovidManagerController.getCenters)
+  app.get('/v1/cov/centers', CovidManagerController.getCentersAll)
   app.delete('/v1/cov/center/:id', CovidManagerController.test, CovidManagerController.deleteCenter)
 }
