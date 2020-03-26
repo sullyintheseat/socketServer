@@ -1,5 +1,5 @@
 const Restaurant = require('../schemas/restaurant.schema')
-
+const Center = require('../schemas/center.schema')
 const CovidManagerController = {
   createRestaurant: async (req, res) => {
     try {
@@ -41,6 +41,34 @@ const CovidManagerController = {
     }
   },
 
+  createCenter: async (req, res) => {
+    try {
+      let result = await Center.createItem(req.body)
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  getCenters: async (req, res) => {
+    try {
+      let result = await Center.getItems()
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
+  deleteCenter: async (req, res) => {
+    try {
+      console.log(req.params.id + ' <-----')
+      let result = await Center.deleteItem(req.params.id)
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   test: (req, res, next) => {
     console.log('test')
     if(req.headers['token'] && req.headers['token'] === 'somevalue') {
@@ -58,4 +86,8 @@ module.exports.controller = (app) => {
   app.get('/v1/cov/rest', CovidManagerController.getList)
   app.get('/v1/cov/rests', CovidManagerController.getRestaurants)
   app.delete('/v1/cov/rest/:id', CovidManagerController.test, CovidManagerController.deleteRestaurant)
+
+  app.post('/v1/cov/center', CovidManagerController.test, CovidManagerController.createCenter)
+  app.get('/v1/cov/center', CovidManagerController.getCenters)
+  app.delete('/v1/cov/center/:id', CovidManagerController.test, CovidManagerController.deleteCenter)
 }
