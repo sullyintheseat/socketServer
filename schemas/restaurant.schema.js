@@ -77,6 +77,7 @@ class Restaurant {
   static async getItems () {
     try {
       return await this.find()
+        .sort({name: 1})
         .exec()
     } catch(error) {
       return false
