@@ -1,5 +1,6 @@
 const Restaurant = require('../schemas/restaurant.schema')
 const Center = require('../schemas/center.schema')
+const Signups = require('../schemas/signup.schema')
 const CovidManagerController = {
   createRestaurant: async (req, res) => {
     try {
@@ -81,6 +82,21 @@ const CovidManagerController = {
     }
   },
 
+  getSubmissions: async (req, res) => {
+    let appId = req.params.appId
+    if(appId) {
+      try {
+        let result = await Signups.getItems({appId: appId })
+        console.log(result)
+        res.status(200).send(result)
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    } else {
+      res.status(401).send('Not Found')
+    }
+  },
+
   test: (req, res, next) => {
     console.log('test')
     if(req.headers['token'] && req.headers['token'] === 'somevalue') {
@@ -103,4 +119,6 @@ module.exports.controller = (app) => {
   app.get('/v1/cov/center', CovidManagerController.getCenters)
   app.get('/v1/cov/centers', CovidManagerController.getCentersAll)
   app.delete('/v1/cov/center/:id', CovidManagerController.test, CovidManagerController.deleteCenter)
+
+  app.get('/v1/cov/submissions/:appId', CovidManagerController.test, CovidManagerController.getSubmissions)
 }
