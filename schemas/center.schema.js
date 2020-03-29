@@ -42,6 +42,10 @@ const CenterSchema = Schema({
   notes: {
     type: String,
     default: null,
+  },
+  centerType: {
+    type: String,
+    default: null,
   }
 },
 {
