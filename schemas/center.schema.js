@@ -46,6 +46,10 @@ const CenterSchema = Schema({
   centerType: {
     type: String,
     default: null,
+  },
+  hours: {
+    type: String,
+    default: null
   }
 },
 {
