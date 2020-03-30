@@ -86,6 +86,22 @@ class Center {
     }
   }
 
+  static async updateItem (data) {
+    try {
+      console.log(data)
+      let update = await this.findOneAndUpdate(
+        {
+          _id : data._id
+        },
+        data,
+        {new: true})
+        .exec()
+      return update;
+    } catch (err) {
+      return err;
+    }
+  }
+
   static async deleteItem (id) {
     try {
       return await this.findOneAndDelete({

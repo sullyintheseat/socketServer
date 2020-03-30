@@ -60,6 +60,17 @@ const CovidManagerController = {
     }
   },
 
+  updateCenter: async (req, res) => {
+    let center = req.body
+    try {
+      let result = await Center.updateItem(center)
+      console.log(result)
+      res.status(200).send(result)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   getCentersAll: async (req, res) => {
     try {
       let result = await Center.getItems()
@@ -117,6 +128,7 @@ module.exports.controller = (app) => {
 
   app.post('/v1/cov/center', CovidManagerController.test, CovidManagerController.createCenter)
   app.get('/v1/cov/center', CovidManagerController.getCenters)
+  app.put('/v1/cov/center', CovidManagerController.test, CovidManagerController.updateCenter)
   app.get('/v1/cov/centers', CovidManagerController.getCentersAll)
   app.delete('/v1/cov/center/:id', CovidManagerController.test, CovidManagerController.deleteCenter)
 
