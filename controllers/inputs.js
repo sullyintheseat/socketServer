@@ -86,6 +86,21 @@ const InputController = {
     }
   },
 
+  getMetricsCSV: async (req, res) => {
+    try {
+      let data = await Analytic.getAllData()
+      let response = ''
+      for(let i = 0; i < data.length; i++) {
+        var t = data[i]
+        response += `${t._id},${t.appId},${t.navigation.itemClicked},${t.metricId},${t.createdAt},${t.tagId}<br/>`
+      }
+      res.status(200).send(response)
+
+  
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
   signUp: async (req, res) => {
     try{
       let data = req.body
@@ -219,6 +234,7 @@ module.exports.controller = (app) => {
 
   app.get('/v1/metrics/:appId', InputController.getMetricsBy)
   app.get('/v1/metrics', InputController.getMetrics)
+  app.get('/v1/metricscsv', InputController.getMetricsCSV)
 
   app.get('/v1/survey/status/:value', InputController.setStatus)
   app.get('/v1/survey/status/', InputController.getStatus)

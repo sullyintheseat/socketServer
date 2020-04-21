@@ -55,12 +55,9 @@ class AppVotes {
     }
   }
 
-  static async getItemBy(evt) {
+  static async getItemBy(query) {
     try {
-      console.log(evtDate)
-      let criteria = new Date(evtDate+'T00:00:00.000Z')
-      console.log({teamId: team, gameDate: `ISODate('${criteria.toISOString()}')` })
-      let result = await this.findOne({teamId: team, gameDate: criteria }).exec()
+      let result = await this.find(query).exec()
       if(!result) {
         return({eventId: null})
       } else {
@@ -71,6 +68,7 @@ class AppVotes {
     }
   }
 
+  //consider moving to a view table
   static async getAggregatedVotes() {
     try {
       let result = await this.aggregate([

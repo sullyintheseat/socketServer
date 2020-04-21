@@ -69,17 +69,19 @@ app.use('/cdn', express.static(path.join(__dirname, 'web')))
 
 let socketController = require('./controllers/index.js')
 
-require('./controllers/communication').controller(app);
-require('./controllers/metrics').controller(app);
-require('./controllers/content').controller(app);
-require('./controllers/s3manager').controller(app);
-require('./controllers/application').controller(app);
-require('./controllers/stats').controller(app);
-require('./controllers/inputs').controller(app);
-require('./controllers/statsperform').controller(app);
-require('./controllers/content.manager').controller(app);
-require('./controllers/module.manager').controller(app);
-require('./controllers/covid.manager').controller(app);
+require('./controllers/communication').controller(app)
+require('./controllers/metrics').controller(app)
+require('./controllers/content').controller(app)
+require('./controllers/s3manager').controller(app)
+require('./controllers/application').controller(app)
+require('./controllers/stats').controller(app)
+require('./controllers/inputs').controller(app)
+require('./controllers/statsperform').controller(app)
+require('./controllers/content.manager').controller(app)
+require('./controllers/module.manager').controller(app)
+require('./controllers/covid.manager').controller(app)
+require('./controllers/pickup.manager').controller(app)
+require('./controllers/germaphobe.manager').controller(app)
 
 http.listen(process.env.PORT, function(io){
   console.log(`listening on *: ${process.env.PORT}`)

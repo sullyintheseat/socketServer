@@ -6,7 +6,7 @@ const SignupSchema = Schema({
     type: String,
     required: true
   },
-  appId: {
+  targetId: {
     type: String,
     required: true
   },
@@ -82,7 +82,7 @@ class Signup {
     try {
       let valid =  false
       for (var item in appData) {
-        if(item !== 'eventId' && item !== 'appId' && item !== 'tagId') {
+        if(item !== 'eventId' && item !== 'targetId' && item !== 'tagId') {
           if(appData[item]) {
             valid = true
           }
