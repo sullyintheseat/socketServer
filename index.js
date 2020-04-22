@@ -81,6 +81,7 @@ require('./controllers/content.manager').controller(app)
 require('./controllers/module.manager').controller(app)
 require('./controllers/covid.manager').controller(app)
 require('./controllers/pickup.manager').controller(app)
+require('./controllers/pickup.controller').controller(app)
 require('./controllers/germaphobe.manager').controller(app)
 
 http.listen(process.env.PORT, function(io){
@@ -139,7 +140,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on('addUserTo', (msg) => {
-    console.log(msg.name + ' ' + msg.state)
+    socket.join(msg.room)
   })
 
   socket.on('removeUser', (name) => {

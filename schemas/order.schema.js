@@ -4,13 +4,25 @@ const shortId = require('shortid')
 const ObjectId = mongoose.Types.ObjectId
 
 const OrderSchema = Schema({
+  orderId: {
+    type: String,
+    default: shortId.generate()
+  },
   name: {
     type: String,
     required: true
   },
+  spot: {
+    type: String,
+    default: null
+  },
   busId: {
     type: String,
-    required: true
+    default: null
+  },
+  orderType: {
+    type: String,
+    default: null
   },
   phone: {
     type: String,
@@ -20,9 +32,9 @@ const OrderSchema = Schema({
     type: String,
     default: null
   },
-  hours: {
-    type: String,
-    default: null
+  isPickedUp: {
+    type: Boolean,
+    default: false
   }
 },
 {
